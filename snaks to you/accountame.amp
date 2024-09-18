@@ -1,0 +1,75 @@
+
+%%[
+    VAR @accountName, @cleanAccountName, @properAccountName
+    SET @accountName = [AccountName]
+    set @first = "1st"
+    SET @start = "St." 
+    SET @43rd = "43rd"
+    /* Initialize cleanString as an empty string */
+    
+     IF IndexOf(@accountName, @first) == 1  THEN
+      SET @accountName = Concat("Hey ", @accountName, ", ")
+    SET @properAccountName = ProperCase(@accountName)
+     ELSEIF IndexOf(@accountName, @start) == 1  THEN
+      SET @accountName = Concat("Hey ", @accountName, ", ")
+    SET @properAccountName = ProperCase(@accountName)
+    ELSEIF IndexOf(@accountName, @43rd) == 1  THEN
+      SET @accountName = Concat("Hey ", @accountName, ", ")
+    SET @properAccountName = ProperCase(@accountName)
+      ELSE 
+    SET @cleanAccountName = ""
+    SET @substring = "'"
+    SET @specialChars = ",.!@#$%^*()_+[]{}|;:\""<>,.?/~`="
+    SET @numbers = "[0123456789]"
+    SET @accountName = Replace(@accountName, "ï¿½", "'")
+     SET @accountName = Replace(@accountName, "â€™", "'")
+    FOR @j = 1 TO length(@specialChars) DO
+        SET @charct = substring(@specialChars, @j, 1)
+        IF IndexOf(@accountName, @charct) > 0 THEN
+            SET @accountName = ''
+            /* Exit the loop early if a special character is found */
+           
+        ENDIF
+    NEXT @j
+    FOR @k = 1 TO length(@numbers) DO
+        SET @charct = substring(@numbers, @k, 1)
+        IF IndexOf(@accountName, @charct) > 0 THEN
+            SET @accountName = ''
+            /* Exit the loop early if a special character is found */
+           
+        ENDIF
+    NEXT @k
+    /* Loop through each character and keep letters and spaces */
+    FOR @i = 1 TO length(@accountName) DO
+        VAR @char
+        SET @char = substring(@accountName, @i, 1)
+        IF indexOf("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ&'- ", @char) > 0 THEN
+            SET @cleanAccountName = concat(@cleanAccountName, @char)
+        ENDIF
+    NEXT @i
+    /* First Name  Business Name, Account Name*/
+    SET @cleanAccountName = Replace(@cleanAccountName, "�", "")
+    SET @cleanAccountName = Replace(@cleanAccountName, "user", "")
+    SET @cleanAccountName = Replace(@cleanAccountName, "firstname", "")
+    SET @cleanAccountName = Replace(@cleanAccountName, "guest", "")
+    SET @cleanAccountName = Replace(@cleanAccountName, "First Name", "")
+    SET @cleanAccountName = Replace(@cleanAccountName, "Business Name", "")
+    SET @cleanAccountName = Replace(@cleanAccountName, "Account Name", "")
+    SET @cleanAccountName = Replace(@cleanAccountName, "name", "")
+    SET @position = IndexOf(@cleanAccountName, @substring)
+    IF @position == 1 THEN
+        SET @cleanAccountName = Substring(@cleanAccountName, 2)
+    ENDIF
+    /* checking value is empty or not */
+    IF empty(@cleanAccountName) OR @cleanAccountName == "" OR IsNull(@cleanAccountName) THEN
+        SET @cleanAccountName = "Hey, "
+        /*seeting static greating*/
+    ELSE
+        SET @cleanAccountName = Concat("Hey ", @cleanAccountName, ", ")
+        /*Hey [businessName], */
+    ENDIF
+    SET @properAccountName = ProperCase(@cleanAccountName)
+ ENDIF
+
+]%%
+Cleaned String: %%=v(@properAccountName)=%%

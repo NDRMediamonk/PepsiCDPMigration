@@ -1,0 +1,1086 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
+<head>
+%%[
+    set @PTR_Status = Lookup("ent.PTR - Birthday Journey - EN QA_PTR - Birthday J_1sgDo000000008pIAA_85RDo000000007IMAQ", "PTR_Status", "emailAddress", emailAddress)
+    /* Find the position in the JSON for activities, date created and points balance */
+    SET @json = Lookup("ent.PTR - Birthday Journey - EN QA_PTR - Birthday J_1sgDo000000008pIAA_85RDo000000007IMAQ", "LoyaltyProgramMember", "emailAddress", emailAddress)
+    IF not empty(@json) THEN
+        /*---build a simple string from JSON data---*/
+        SET @string = Replace(@json, "{", "")
+        SET @string = Replace(@string, "}", "")
+        SET @string = Replace(@string, " ", "")
+        SET @string = Replace(@string, "[", "")
+        SET @string = Replace(@string, "]", "")
+        SET @string = Replace(@string, '"', '')
+        SET @string = Replace(@string, ':', ',')
+        /*---build a rowset---*/
+        SET @JSONrows = BuildRowsetFromString(@string, ",")
+        SET @JSONrowCount = RowCount(@JSONrows)
+        /*---declare the strings for JSON fields position in the rowset, will be used in the for-if loops---*/
+        SET @PointsBalancenumber = ""
+        /*---For loop---*/
+        IF @JSONrowCount > 0 THEN
+            FOR @i = 1 TO @JSONrowCount DO
+                SET @row = Row(@JSONrows, @i)
+                /* get row based on counter */
+                SET @JSONvalue = Field(@row, 1)
+                /*---JSON Points_Balance positions---*/
+                IF @JSONvalue == "Points_Balance" THEN
+                    IF @PointsBalancenumber == "" THEN
+                        SET @PointsBalancenumber = Add(@i, 1)
+                    ELSE
+                        SET @PointsBalancenumber = concat(@PointsBalancenumber, ",", Add(@i, 1))
+                    ENDIF
+                ENDIF
+            NEXT @i
+        ENDIF
+        SET @points = FormatNumber(Field(Row(@JSONrows, @PointsBalancenumber), 1), 'N0', 'en-us')
+    ELSE
+        IF @PTR_Status == 'Subscriber' THEN
+            SET @points = ''
+        ELSE
+            SET @points = '0'
+        ENDIF
+    ENDIF
+]%%
+<!--[if gte mso 9]>
+<xml>
+<o:OfficeDocumentSettings>
+<o:AllowPNG/>
+<o:PixelsPerInch>96</o:PixelsPerInch>
+</o:OfficeDocumentSettings>
+</xml>
+<![endif]-->
+<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="format-detection" content="date=no" />
+<meta name="format-detection" content="address=no" />
+<meta name="format-detection" content="telephone=no" />
+<meta name="x-apple-disable-message-reformatting" />
+<meta name="color-scheme" content="light dark">
+<meta name="supported-color-schemes" content="light dark">
+<!-- Loading Custom Fonts -->
+<!--[if !mso]><!-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Arimo:wght@400;500;700&family=Montserrat:wght@200;300;400;500&display=swap" rel="stylesheet" />
+<!--<![endif]-->
+<!-- END Loading Custom Fonts -->
+<!--[if gte mso 9]>
+<style type="text/css" media="all">
+sup { font-size: 100% !important; }
+</style>
+<![endif]-->
+<!-- body, html, table, thead, tbody, tr, td, div, h1, h2, h3, h4, h5, p, a, span, em, i, strong { font-family: Arial, sans-serif !important; } -->
+<title>Your birthday entries are waiting for you! 🎁</title>
+
+<!--[if (gte mso 9)|(IE)]><!-->
+    <style>
+        @import url("https://fonts.googleapis.com/css?family=Montserrat:400,500,700%7COpen+Sans:400,700&display=swap");
+        @import url("https://fonts.googleapis.com/css2?family=Arimo:wght@400;500;600;700&family=Montserrat:wght@200;300;400;500;600;700&display=swap");
+        
+        /* PepsiCo Fonts */
+        @font-face {
+        font-family: "GTWalsheim";
+        font-style: normal;
+        font-weight: 400;
+        display: swap;
+        src: url(https://www.tastyrewards.com/themes/tastytheme/src/fonts/gtwalsheimbold-webfont.woff2)
+        format("woff2");
+        }
+        
+        @font-face {
+        font-family: "GTWalsheim";
+        font-style: normal;
+        font-weight: 700;
+        display: swap;
+        src: url(https://www.tastyrewards.com/themes/brandstheme/src/fonts/GTWalsheim/GTWalsheim-Black.woff2)
+        format("woff2");
+        }
+        
+        @font-face {
+        font-family: "Akzidenz Grotesk";
+        font-style: normal;
+        font-weight: 400;
+        display: swap;
+        src: url(https://www.tastyrewards.com/themes/tastytheme/src/fonts/newAkzidenz.woff2)
+                format("woff2");
+        }
+        
+        /* Bold font */
+        @font-face {
+        font-family: "Akzidenz Grotesk";
+        font-style: normal;
+        font-weight: 700;
+        display: swap;
+        src: url(https://www.tastyrewards.com/themes/brandstheme/src/fonts/AkzidenzGrotesk/AkzidenzGrotesk-Bold.woff2)
+                format("woff2");
+        }
+        </style>
+        <!--<![endif]-->
+        
+
+<style type="text/css" media="screen">
+body { padding:0 !important; margin:0 auto !important; display:block !important; min-width:100% !important; width:100% !important; background:#fffffe; -webkit-text-size-adjust:none }
+a { color:#333333; text-decoration:none }
+p { margin:0 !important }
+strong { font-weight: bold !important; }
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+ul,
+li { padding: 0 !important; margin: 0 !important; mso-line-height-rule:exactly; Margin: 0; }
+ul { list-style-position: inside !important; }
+.text-preview { display: none !important; }
+a.skip-main { left:-999px; position:absolute; top:auto; width:1px; height:1px; overflow:hidden; z-index:-999; }
+a.skip-main:focus, a.skip-main:active { color: #ffffff; background-color:#ffffff; left: auto; top: auto; width: 30%; height: auto; overflow:auto; margin: 10px 35%; padding:5px; border-radius: 15px; border:4px solid yellow; text-align:center; font-size:12em; z-index:999; }
+table { mso-table-lspace:0pt; mso-table-rspace:0pt; }
+img { margin: 0 !important; -ms-interpolation-mode: bicubic; /* Allow smoother rendering of resized image in Internet Explorer */ }
+img, a img{ border:0; outline:none; text-decoration:none; }
+#outlook a { padding:0; }
+.ReadMsgBody { width:100%; }
+.ExternalClass { width:100%; }
+div,p,a,li,td,blockquote { mso-line-height-rule:exactly; }
+a[href^=tel],a[href^=sms] { color:inherit; text-decoration:none; }
+.ExternalClass, .ExternalClass p, .ExternalClass td, .ExternalClass div, .ExternalClass span, .ExternalClass font { line-height:100%; }
+a[x-apple-data-detectors] { color:inherit !important; text-decoration:none !important; font-size:inherit !important; font-family:inherit !important; font-weight:inherit !important; line-height:inherit !important; }
+#MessageViewBody, #MessageWebViewDiv { width: 100% !important; } /* Samsung Galaxy Note 4 Samsung Mail - make email stay centered */
+.dijitReset { color: #000001 !important; }
+.btn a { display: block; text-decoration: none; }
+.btnp-6-15 a { padding: 6px 15px; }
+.btnp-12-24 a { padding: 12px 24px; }
+.btnp-12 a { padding: 12px; }
+.l-white a { color: #ffffff; }
+.l-dark a { color: #333333; }
+.l-grey a { color: #3d3c3c; }
+.l-blue a { color: #0e4caa; }
+.l-red a { color: #db1d2c; }
+.br-12-12-0-0 { border-radius: 12px 12px 0 0; }
+.br-12 { border-radius: 12px; }
+:root {
+color-scheme: light dark;
+supported-color-schemes: light dark;
+}
+@media (prefers-color-scheme: dark) {
+.bg-dark { background: #000000 !important; }    
+.bg-white { background: #fefefe !important; }
+.bg-grey { background: #f8f8f8 !important; }
+.bg-red { background: #db1d2c !important; }
+.bg-blue { background: #0d4ca9 !important; }
+.bg-blue-2 { background: #00a0de !important; }
+.c-white { color: #ffffff !important; }
+.c-dark { color: #333333 !important; }
+.c-blue { color: #0e4caa !important; }
+.c-red { color: #db1d2c !important; }
+.c-grey { color: #3d3c3c !important; }
+.l-white a { color: #ffffff !important; }
+.l-dark a { color: #333333 !important; }
+.l-blue a { color: #0e4caa !important; }
+.l-red a { color: #db1d2c !important; }
+.l-grey a { color: #3d3c3c !important; }
+}
+/*Add this styling for support in Outlook app (Android).*/
+[data-ogsc] .bg-dark { background: #000000 !important; }
+[data-ogsc] .bg-white { background: #fefefe !important; }
+[data-ogsc] .bg-grey { background: #f8f8f8 !important; }
+[data-ogsc] .bg-red { background: #db1d2c !important; }
+[data-ogsc] .bg-blue { background: #0d4ca9 !important; }
+[data-ogsc] .bg-blue-2 { background: #00a0de !important; }
+[data-ogsc] .c-white { color: #ffffff !important; }
+[data-ogsc] .c-dark { color: #333333 !important; }
+[data-ogsc] .c-blue { color: #0e4caa !important; }
+[data-ogsc] .c-red { color: #db1d2c !important; }
+[data-ogsc] .c-grey { color: #3d3c3c !important; }
+[data-ogsc] .l-white a { color: #ffffff !important; }
+[data-ogsc] .l-dark a { color: #333333 !important; }
+[data-ogsc] .l-blue a { color: #0e4caa !important; }
+[data-ogsc] .l-red a { color: #db1d2c !important; }
+[data-ogsc] .l-grey a { color: #3d3c3c !important; }
+/* Mobile styles */
+@media only screen and (max-device-width: 480px), only screen and (max-width: 480px) {
+   .mpx-15 { padding-left: 15px !important; padding-right: 15px !important; }
+
+   .mpy-20 { padding-top: 20px !important; padding-bottom: 20px !important; }
+
+   .mfz-34 { font-size: 34px !important; }
+
+   .mlh-38 { line-height: 38px !important; }
+
+   .mpt-120 { padding-top: 120px !important; }
+
+   .mfz-20 { font-size: 20px !important; }
+
+   .mlh-24 { line-height: 24px !important; }
+
+   .mpb-20 { padding-bottom: 20px !important; }
+
+   .mpb-8 { padding-bottom: 8px !important; }
+
+.td,
+.m-shell { width: 100% !important; min-width: 100% !important; }
+.mt-left { text-align: left !important; }
+.mt-center { text-align: center !important; }
+.me-left { margin-right: auto !important; }
+.me-center { margin: 0 auto !important; }
+.mh-auto { height: auto !important; }
+.mw-auto { width: auto !important; }
+.fluid-img img { width: 100% !important; max-width: 100% !important; height: auto !important; }
+.column,
+.column-top,
+.column-dir,
+.column-dir-top { float: left !important; width: 100% !important; display: block !important; }
+.m-hide { display: none !important; width: 0 !important; height: 0 !important; font-size: 0 !important; line-height: 0 !important; min-height: 0 !important; }
+.m-block { display: block !important; }
+.mw-15 { width: 15px !important; }
+.mw-100p { width: 100% !important; }
+.mw-60 { width: 60px !important; height: auto !important; }
+.mw-60 img { width: 60px !important; height: auto !important; }
+.mt-28 { margin-top: -28px !important; }
+.mh-0 { height: auto !important; }
+.mh-20 { height: 20px !important; }
+.mh-54 { height: 54px !important; }
+.mh-200 { height: 200px !important; }
+.mh-220 { height: 220px !important; }
+.bg {
+height: auto !important;
+background-image: url(https://image.em.pepsico.com/lib/fe4515707564067f771671/m/1/5e0fe05b-2bce-4a59-9ee7-14e093d8d1ec.gif);
+-webkit-background-size: cover !important;
+background-size: cover !important;
+background-position: center center !important;
+}
+}
+@media only screen and (max-device-width: 624px), only screen and (max-width: 624px) {
+.mb-cta-text { font-size: 25px!important; }
+.mb-padding-x { padding-left: 10px !important;
+                padding-right: 10px !important; }
+.mb-padding-points { padding-left: 0 !important;
+                     padding-right: 12px !important; }
+.font-fix { font-size: 20px !important;
+            font-weight: 600 !important; }
+}
+</style>
+</head>
+<body class="body" style="padding:0 !important; margin:0 auto !important; display:block !important; min-width:100% !important; width:100% !important; background:#fffffe; -webkit-text-size-adjust:none;">
+<center>
+<table width="100%" border="0" cellspacing="0" cellpadding="0" style="margin: 0; padding: 0; width: 100%; height: 100%;" bgcolor="#fffffe" class="bg-dark">
+<tr>
+<td style="margin: 0; padding: 0; width: 100%; height: 100%;" align="center" valign="top">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<!-- Preview Text -->
+<tr class="m-hide" style="mso-hide: all;">
+<td style="font-size: 0pt; line-height: 0pt;">&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;</td>
+</tr>      <!-- END Preview Text -->
+</table>
+<table width="640" border="0" cellspacing="0" cellpadding="0" class="m-shell">
+<tr>
+<td class="td" style="width:640px; min-width:640px; font-size:0pt; line-height:0pt; padding:0; margin:0; font-weight:normal;">
+
+         <!-- LOGO START -->
+%%[ IF EMPTY(@points) THEN ]%%
+<div style="display: none">
+    %%[
+        SET @firstName = FirstName
+        SET @subjectLine = "Check out your sweet birthday surprise! 🎁"
+        IF empty(@firstName) OR @firstName == "FIRSTNAME" THEN
+            SET @ribbon = 'Happy Birthday!'
+        ELSE
+            SET @ribbon = concat('Happy Birthday, ', ProperCase(@firstName))
+        ENDIF
+    ]%%
+</div>
+          <center>
+         <!-- Logo -->
+                   <!--[if (gte mso 9)|(IE)]>
+                                <table width="640" style="width: 640px;" cellpadding="0" cellspacing="0" border="0" role="presentation">
+                                <tr>
+                                <td width="640" style="background-color:#0057A2; text-align: center;">
+                           <!
+                      [endif]--><!-- PERSONALIZATION RIBBON START --><table border="0" cellpadding="0" cellspacing="0" role="presentation" style="max-width: 640px; width: 100%; text-align: center">
+           
+                        <tr>
+                          <td>
+                           <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="background-color: #0057a2; text-align: center">
+                            
+                             <tr>
+                              <td class="bg-blue l-white a" width="640">
+                              </td><td class="bg-blue l-white a" style="
+                                                 width: 100%;
+                                                 color: #ffffff;
+                                                 font-family: 'Akzidenz Grotesk', 'Montserrat', sans-serif,
+                                                   Helvetica, Arial;
+                                                 font-size: 12px;
+                                                 line-height: 130%;
+                                                 padding-top: 16px;
+                                                 padding-bottom: 4px;
+                                               ">
+                               %%=v(@ribbon)=%%</td></tr><tr>
+                              <td class="bg-blue l-white a" width="640">
+                              </td><td class="bg-blue l-white a" style="
+                                                 width: 100%;
+                                                 color: #ffffff;
+                                                 font-family: 'Akzidenz Grotesk', 'Montserrat', sans-serif,
+                                                   Helvetica, Arial;
+                                                 font-size: 12px;
+                                                 font-weight: 700;
+                                                 padding-bottom: 14px;
+                                               ">
+                               <a alias="view_in_browser_header" href="%%view_email_url%%" style="color: #ffffff; text-decoration: none" target="_blank">View in browser</a></td></tr></table></td></tr></table>
+  <!--[if (gte mso 9)|(IE)]>
+  </td>
+  </tr>
+  </table>
+  <![endif]-->
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+  <td class="py-15 px-30 mpy-20 mpx-15" style="font-size:0pt; line-height:0pt; text-align:center; padding-top: 15px; padding-bottom: 15px; padding-left: 30px; padding-right: 30px;"><a href="https://www.tastyrewards.com/en-us/" target="_blank" alias="Header_Logo"><img src="https://image.em.pepsico.com/lib/fe4515707564067f771671/m/1/d96cbf85-4695-4ec0-9c09-0a7a3ac41f10.png" width="154" height="140" border="0" alt="PepsiCo Tasty Rewards" style="max-width:154px; width: 100%"/></a></td>
+  </tr>
+  </table>
+  <!-- END Logo -->
+</center>
+<!-- Image and Text - 1 -->
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+    <tr>
+    <td background="https://image.em.pepsico.com/lib/fe4515707564067f771671/m/1/9c46bd43-ff42-44a8-8d9d-416391e6c166.gif" bgcolor="#00b4ff" width="640" height="1001" valign="top" alt="Happy Birthday!" style="-webkit-background-size: cover; background-size: cover; background-position: center 0; width: 100%" class="bg">
+    <!--[if gte mso 9]>
+    <v:rect xmlns:v="urn:schemas-microsoft-com:vml" fill="true" stroke="false" style="width:640px;height:1001px;">
+    <v:fill type="frame" src="https://image.em.pepsico.com/lib/fe4515707564067f771671/m/1/9c46bd43-ff42-44a8-8d9d-416391e6c166.gif" color="#00b4ff" />
+    <v:textbox inset="0,0,0,0">
+    <![endif]-->
+    <div>
+    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+    <tr>
+    <td class="m-hide" width="20" style="font-size:0pt; line-height:0pt; text-align:left;"></td>
+    <td class="py-44 mpy-20 mpx-15" style="padding-top: 44px; padding-bottom: 44px;">
+    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+    <tr>
+    <td class="mh-220" height="540" style="font-size:0pt; line-height:0pt; text-align:left;">&nbsp;</td>
+    </tr>
+    <tr>
+    <td class="fz-52 lh-56 mfz-34 mlh-38 l-white pb-20 mpt-120" style="font-family:'GTWalsheim', 'Arimo', Arial, sans-serif; min-width:auto !important; text-align:center; font-size: 52px; line-height: 56px; color:#fffffe; padding-bottom: 20px;">
+    <h1 class="fz-52 lh-56 mfz-34 mlh-38 l-white" style="font-family:'GTWalsheim', 'Arimo', Arial, sans-serif; min-width:auto !important; text-align:center; font-size: 52px; line-height: 56px; color:#fffffe;"><strong>Your Birthday <span class="m-hide"><br /></span>Gift Awaits!</strong></h1>
+    </td>
+    </tr>
+    <tr>
+    <td class="l-white fz-24 lh-28 mfz-20 mlh-24 pb-34 mpb-20" style="font-family:'Akzidenz Grotesk', 'Montserrat', Arial, sans-serif; min-width:auto !important; text-align:center; color:#fffffe; font-size: 24px; line-height: 28px; padding-bottom: 34px;">
+    <p class="l-white fz-24 lh-28 mfz-20 mlh-24" style="font-family:'Akzidenz Grotesk', 'Montserrat', Arial, sans-serif; min-width:auto !important; text-align:center; color:#fffffe; font-size: 24px; line-height: 28px;">
+    Create your FREE PepsiCo Tasty Rewards <span class="m-hide"><br /></span>account to take advantage of <strong>10 birthday <span class="m-hide"><br /></span>entries</strong>, which you can use towards any <span class="m-hide"><br /></span>sweepstakes! Hurry, this only comes <span class="m-hide"><br /></span>around once a year!
+    </p>
+    </td>
+    </tr>
+    <tr>
+    <td class="mpb-8" align="center">
+    <!-- Button -->
+    <table border="0" cellspacing="0" cellpadding="0">
+    <tr>
+    <td class="fz-24 lh-28 mfz-20 mlh-24 l-white btnp-12-24 bg-red" style="border-radius: 5px; border-bottom: 4px solid #b81321; font-family:'GTWalsheim', 'Arimo', Arial, sans-serif; text-align:center; min-width:auto !important; font-size: 24px; line-height: 28px; color:#fffffe; mso-padding-alt:12px 24px;" bgcolor="#db1d2c"><a href="https://tastyrewards.com/en-us/dashboard/#activity" target="_blank" alias="Hero_CTA" class="link l-white" style="display: block; padding: 12px 24px; text-decoration:none; color:#fffffe;"><span class="link l-white" style="text-decoration:none; color:#fffffe;"><strong>Create Your Account &amp; Celebrate</strong></span></a></td>
+    </tr>
+    </table>
+    <!-- END Button -->
+    </td>
+    </tr>
+    </table>
+    </td>
+    <td class="m-hide" width="20" style="font-size:0pt; line-height:0pt; text-align:left;"></td>
+    </tr>
+    </table>
+    </div>
+    <!--[if gte mso 9]>
+    </v:textbox>
+    </v:rect>
+    <![endif]-->
+    </td>
+    </tr>
+    </table>
+    <!-- END Image and Text - 1 -->
+    <!-- Image and Text - 2 -->
+    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+    <tr>
+    <td class="fluid-img" style="font-size:0pt; line-height:0pt; text-align:center;"><a href="https://tastyrewards.jebbit.com/zocaca6r?L=Email" target="_blank" alias="Banner_2_Image"><img src="https://image.em.pepsico.com/lib/fe4515707564067f771671/m/1/23b8d849-828e-495c-9e81-c6484c88be2c.png" width="640" height="402" border="0" alt="Thinking of something else?" style="width: 100%" /></a></td>
+    </tr>
+    <tr>
+    <td class="py-64 px-20 mpy-20 mpx-15" style="padding-top: 64px; padding-bottom: 64px; padding-left: 20px; padding-right: 20px;">
+    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+    <tr>
+    <td class="fz-52 lh-56 mfz-34 mlh-38 c-blue l-blue pb-20" style="font-family:'GTWalsheim', 'Arimo', Arial, sans-serif; min-width:auto !important; text-align:center; font-size: 52px; line-height: 56px; color:#0e4caa; padding-bottom: 20px;">
+    <h1 class="fz-52 lh-56 mfz-34 mlh-38 c-blue l-blue" style="font-family:'GTWalsheim', 'Arimo', Arial, sans-serif; min-width:auto !important; text-align:center; font-size: 52px; line-height: 56px; color:#0e4caa;"><strong>Let Us Know What <span class="m-hide"><br /></span>You Like</strong></h1>
+    </td>
+    </tr>
+    <tr>
+    <td class="c-white l-white fz-24 lh-28 mfz-20 mlh-24 pb-34 mpb-20" style="font-family:'Akzidenz Grotesk', 'Montserrat', Arial, sans-serif; min-width:auto !important; text-align:center; color:#3d3c3c; font-size: 24px; line-height: 28px; padding-bottom: 34px;">
+    <p class="c-white l-white fz-24 lh-28 mfz-20 mlh-24" style="font-family:'Akzidenz Grotesk', 'Montserrat', Arial, sans-serif; min-width:auto !important; text-align:center; color:#3d3c3c; font-size: 24px; line-height: 28px;">
+    Looking for something other than entries? <span class="m-hide"><br /></span>Tell us what other rewards you have in mind <span class="m-hide"><br /></span>with the link below!
+    </p>
+    </td>
+    </tr>
+    <tr>
+    <td align="center">
+    <!-- Button -->
+    <table border="0" cellspacing="0" cellpadding="0">
+    <tr>
+    <td class="fz-24 lh-28 mfz-20 mlh-24 l-white btnp-12-24 bg-red" style="border-radius: 5px; border-bottom: 4px solid #b81321; font-family:'GTWalsheim', 'Arimo', Arial, sans-serif; text-align:center; min-width:auto !important; font-size: 24px; line-height: 28px; color:#fffffe; mso-padding-alt:12px 24px;" bgcolor="#db1d2c"><a href="https://tastyrewards.jebbit.com/zocaca6r?L=Email" target="_blank" alias="Banner_2_CTA" class="link l-white" style="display: block; padding: 12px 24px; text-decoration:none; color:#fffffe;"><span class="link l-white" style="text-decoration:none; color:#fffffe;"><strong>Get Started</strong></span></a></td>
+    </tr>
+    </table>
+    <!-- END Button -->
+    </td>
+    </tr>
+    </table>
+    </td>
+    </tr>
+    </table>
+    <!-- END Image and Text - 2 -->
+    <!-- Footer -->
+    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+    <tr>
+    <td class="py-54 px-20 mpy-20 mpx-15 bg-blue" bgcolor="#0d4ca9" style="padding-top: 54px; padding-bottom: 54px; padding-left: 20px; padding-right: 20px;">
+    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+    <tr>
+    <td class="pb-34 mpb-20" style="font-size:0pt; line-height:0pt; text-align:center; padding-bottom: 34px;"><a href="https://www.tastyrewards.com/en-us/" target="_blank" alias="Footer_Logo"><img src="https://image.em.pepsico.com/lib/fe4515707564067f771671/m/1/729b6c3c-da25-432b-931b-0d3f75a16ebb.png" width="132" height="120" border="0" alt="PepsiCo Tasty Rewards" style="max-width:132px; width: 100%"/></a></td>
+    </tr>
+    <tr>
+    <td class="fz-10 lh-18 l-white" style="font-family:'Akzidenz Grotesk', 'Montserrat', Arial, sans-serif; min-width:auto !important; font-size: 10px; line-height: 18px; color:#fffffe; text-align:center;">
+    <p class="fz-10 lh-18 l-white" style="font-family:'Akzidenz Grotesk', 'Montserrat', Arial, sans-serif; min-width:auto !important; font-size: 10px; line-height: 18px; color:#fffffe; text-align:center;">
+    You must create your account and provide your birthdate during account creation to be eligible to view the birthdate activity.  After creating your account, return to the activities screen on tastyrewards.com and the activity will be available.  This activity is only available to be claimed once per account holder in a calendar year.
+    <br /><br />
+    We sent this email to: <a href="mailto:%%emailaddr%%" target="_blank" alias="email_address" style="cursor: auto; text-decoration:none; color:#fffffe;" class="link l-white"><span class="link l-white" style="text-decoration:none; color:#fffffe;">%%emailaddr%%</span></a> since you are registered as a member of our PepsiCo Tasty Rewards program. You may unsubscribe at any time by <a href="%%unsub_center_url%%" alias="Unsubscribe_footer" target="_blank" class="link l-white" style="text-decoration:none; color:#fffffe;"><span class="link l-white" style="text-decoration:none; color:#fffffe;">clicking the link below</span></a>.
+    <br /><br />
+    <a href="%%profile_center_url%%" target="_blank" alias="Preference_center" class="link l-white" style="text-decoration:none; color:#fffffe;"><span class="link l-white" style="text-decoration:none; color:#fffffe;">Manage Preferences</span></a>
+    &nbsp;&nbsp;|&nbsp;&nbsp;<a href="%%unsub_center_url%%" target="_blank" alias="Unsubscribe_footer" class="link l-white" style="text-decoration:none; color:#fffffe;"><span class="link l-white" style="text-decoration:none; color:#fffffe;">Unsubscribe</span></a>
+    &nbsp;&nbsp;|&nbsp;&nbsp;<a href="https://contact.pepsico.com/pepsico/privacy-policy" target="_blank" alias="Privacy_footer" class="link l-white" style="text-decoration:none; color:#fffffe;"><span class="link l-white" style="text-decoration:none; color:#fffffe;">Privacy Policy</span></a> 
+    &nbsp;&nbsp;|&nbsp;&nbsp;<a href="https://contact.pepsico.com/pepsico/terms-conditions" target="_blank" alias="Terms_footer" class="link l-white" style="text-decoration:none; color:#fffffe;"><span class="link l-white" style="text-decoration:none; color:#fffffe;">Terms of Use</span></a> 
+    &nbsp;&nbsp;|&nbsp;&nbsp;<a href="https://contact.pepsico.com/tastyrewardsus" target="_blank" alias="Contact_footer" class="link l-white" style="text-decoration:none; color:#fffffe;"><span class="link l-white" style="text-decoration:none; color:#fffffe;">Contact Us</span></a>
+    &nbsp;&nbsp;|&nbsp;&nbsp;<a href="%%view_email_url%%" target="_blank" alias="Browser_footer" class="link l-white" style="text-decoration:none; color:#fffffe;"><span class="link l-white" style="text-decoration:none; color:#fffffe;">View in browser</span></a>
+    <br /><br />
+    &copy; %%xtyear%% Pep&zwj;siCo, In&zwj;c. 70&zwj;0 Ander&zwj;son Hi&zwj;ll R&zwj;d, Purc&zwj;hase, N&zwj;Y 10&zwj;577   |  <a href="tel:+18332282789" target="_blank" alias="zip_code" class="link l-white" style="text-decoration:none; color:#fffffe;"><span class="link l-white" style="text-decoration:none; color:#fffffe;">833-228-2789</span></a>
+    <br /><br />
+    <a href="https://www.tastyrewards.com/en-us/" target="_blank" alias="tastyrewards_footer_end" class="link l-white" style="text-decoration:none; color:#fffffe;"><span class="link l-white" style="text-decoration:none; color:#fffffe;">www.tastyrewards.com/en-us</span></a>
+    <br /><br />
+    All trademarks and logos are property of their respective owners.
+    </p>
+    </td>
+    </tr>
+    </table>
+    </td>
+    </tr>
+    </table>
+    <!-- END Footer -->
+    <custom name="opencounter" type="tracking" />
+    <custom name="usermatch" type="tracking" />
+    </td>
+    </tr>
+    </table>
+    </td>
+    </tr>
+    </table>
+    </center>
+    </body>
+    </html>
+    %%[ ENDIF ]%%
+
+    %%[
+        IF NOT EMPTY(@points) AND @points != 0 THEN
+            SET @asterisk = "*Log in to your Account Dashboard to confirm the actual number of Entries you have to use to enter into a Sweepstakes. Recent activity may not be reflected in the Entries shown above and your actual Entries available may be different."
+            SET @disclaimer = "Unused Entries will expire after 12 months of no activity in your Account or 12 months following the date on which you completed an Activity, earned an Entry but did not use for a drawing (any unused Entries remaining in an Account after that time will be forfeited)."
+    ]%%
+<div style="display: none">
+        %%[
+            SET @firstName = FirstName
+            IF empty(@firstName) OR @firstName == "FIRSTNAME" THEN
+                SET @subjectLine = "Valued Member, Your birthday entries are waiting for you! 🎁"
+                SET @ribbon = 'Happy Birthday!'
+            ELSE
+                SET @subjectLine = CONCAT(TRIM(PROPERCASE(@firstName)), ", Your birthday entries are waiting for you! 🎁")
+                SET @ribbon = concat('Happy Birthday, ', ProperCase(@firstName))
+            ENDIF
+            /* Modular Brands Coding */
+            SET @activeLoyalty = Lookup("ent.PTR - Birthday Journey - EN QA_PTR - Birthday J_1sgDo000000008pIAA_85RDo000000007IMAQ", "Brand_Affinity", "emailAddress", emailAddress)
+            IF @activeLoyalty != "PTR" THEN
+                set @brand_header_img = Lookup("PTR_Modular_Brands_Attributes", "Header Image URL", "Brand Short Name", @activeLoyalty)
+                set @brand_header_link = Lookup("PTR_Modular_Brands_Attributes", "Header Link", "Brand Short Name", @activeLoyalty)
+                set @brand_header_alt_text = Lookup("PTR_Modular_Brands_Attributes", "Header Alt Text", "Brand Short Name", @activeLoyalty)
+                SET @link = LookUp("PTR_Modular_Brands_Attributes", "Header Link", "Brand Short Name", @activeLoyalty)
+            ELSE
+                SET @link = "https://www.tastyrewards.com/en-us/dashboard?__locale__=en#activity"
+            ENDIF
+        ]%%
+</div>
+         <center>
+          <!--[if (gte mso 9)|(IE)]>
+                                <table width="640" style="width: 640px;" cellpadding="0" cellspacing="0" border="0" role="presentation">
+                                <tr>
+                                <td width="640" style="background-color:#0057A2; text-align: center;">
+                           <!
+                      [endif]--><!-- PERSONALIZATION RIBBON START --><table border="0" cellpadding="0" cellspacing="0" role="presentation" style="max-width: 640px; width: 100%; text-align: center">
+           
+            <tr>
+             <td>
+              <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="background-color: #0057a2; text-align: center">
+               
+                <tr>
+                 <td class="bg-blue l-white a" width="640">
+                 </td><td class="bg-blue l-white a" style="
+                                    width: 100%;
+                                    color: #ffffff;
+                                    font-family: 'Akzidenz Grotesk', 'Montserrat', sans-serif,
+                                      Helvetica, Arial;
+                                    font-size: 12px;
+                                    line-height: 130%;
+                                    padding-top: 16px;
+                                    padding-bottom: 4px;
+                                  ">
+                  %%=v(@ribbon)=%%</td></tr><tr>
+                 <td class="bg-blue l-white a" width="640">
+                 </td><td class="bg-blue l-white a" style="
+                                    width: 100%;
+                                    color: #ffffff;
+                                    font-family: 'Akzidenz Grotesk', 'Montserrat', sans-serif,
+                                      Helvetica, Arial;
+                                    font-size: 12px;
+                                    font-weight: 700;
+                                    padding-bottom: 14px;
+                                  ">
+                  <a alias="view_in_browser_header" href="%%view_email_url%%" style="color: #ffffff; text-decoration: none" target="_blank">View in browser</a></td></tr></table></td></tr></table><!-- PERSONALIZATION RIBBON END -->
+                  <!-- LOGO START --><!--[if (gte mso 9)|(IE)]->
+                             <table cellpadding="0" cellspacing="0" border="0" width="640">
+                               <tr>
+                                 <td width="640" height="151" style="">                
+                                    <v:rect xmlns:v="urn:schemas-microsoft-com:vml" fill="true" stroke="false" style="width:640px;height:151px;">
+                                    <v:fill type="frame" src="https://image.em.pepsico.com/lib/fe4515707564067f771671/m/3/6e7f0f29-d87c-45be-8243-006faaa587be.png" />
+                                    <v:textbox inset="0,0,0,0">               
+                           <![endif]--><table background="https://image.em.pepsico.com/lib/fe4515707564067f771671/m/3/6e7f0f29-d87c-45be-8243-006faaa587be.png" border="0" cellpadding="0" cellspacing="0" role="presentation" style="max-width: 640px; width: 100%; text-align: center; background-size: cover;">
+           
+            <tr>
+             <td style="padding: 0; text-align: left">
+              <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="display: inline-block">
+               
+                <tr>
+                 <td height="151" style="padding: 0; text-align: center; vertical-align: center;" width="201">
+                  <a alias="logo_header" conversion="false" data-linkto="https://" href="https://www.tastyrewards.com/en-us/" target="_blank" title=""><img alt="PepsiCo Tasty Rewards" height="103.27" src="https://image.em.pepsico.com/lib/fe4515707564067f771671/m/3/5711fd2b-69e0-400d-9489-b668ba2419af.png" style="width: 113.59px; height: 103.27px; padding: 0px; text-align: center;" width="113.59"></a></td><td height="151" style="border-right: 0.5px solid #ffffff; opacity: 30%">
+                 </td><td width="20">
+                 </td><td class="font-fix l-white a" style="
+                                    font-family: 'GTWalsheim', 'Arimo', sans-serif, Helvetica,
+                                      Arial;
+                                    font-size: 30px;
+                                    font-weight: 700;
+                                    color: #ffffff;
+                                    mso-line-height-rule: exactly;
+                                    line-height: 27.3px;
+                                    text-align: left;
+                                  " width="204">
+                  Your Entries* Available</td><td width="5">
+                 </td><td style="
+                                    font-family: 'GTWalsheim', 'Arimo', sans-serif, Helvetica,
+                                      Arial;
+                                    font-size: 26px;
+                                    font-weight: 700;
+                                    color: #ffffff;
+                                    mso-line-height-rule: exactly;
+                                    line-height: 27.3px;
+                                  " width="149">
+                  <!--[if (gte mso 9)|(IE)]->
+                                <table cellpadding="0" cellspacing="0" border="0" role="presentation">
+                                <tr>
+                                <td style="vertical-align: center; background-color:#f8f8f8;">
+                                <![endif]--><table border="0" cellpadding="0" cellspacing="0" role="presentation" style="background-color: #f8f8f8; border-radius: 8px 8px 8px 8px; background-size: cover;">
+                   
+                    <tr>
+                     <td class="mb-cta-text mb-padding-x" style="
+                                          color: #0057a2;
+                                          font-size: 32px;
+                                          font-weight: 700;
+                                          padding: 20.3px 8.17px 25.3px 34px;
+                                          border-radius: 8px 0 0 8px; 
+                                        ">
+                      <img height="28.59" src="https://image.em.pepsico.com/lib/fe4515707564067f771671/m/3/689f2f60-5e07-44cc-a09b-656ee5891379.png" width="28.59"></td>
+                     <td class="mb-cta-text mb-padding-points" style="
+                                          color: #0057a2;
+                                          font-family: 'GTWalsheim', 'Arimo', sans-serif, Helvetica,
+                                      Arial;
+                                          font-size: 35px;
+                                          font-weight: 700;
+                                          padding: 20.3px 40px 25.3px 0;
+                                          border-radius: 0 8px 8px 0;
+                                        ">
+                      %%=v(@points)=%%</td></tr></table><!--[if (gte mso 9)|(IE)]->
+                                  </td>
+                                  </tr>
+                                  </table>
+                                  <![endif]--></td></tr></table></td></tr>
+<!--
+        %%[ IF @activeLoyalty != "PTR" THEN ]%%
+-->
+               <tr>
+                  <td valign="middle">
+                   <table cellpadding='0' cellspacing='0' border='0' role='presentation' style="max-width: 640px; width: 100%;" width="640">
+                     <tr>
+                       <td style="font-size: 0; padding: 0">
+                         <a href="%%=RedirectTo(@brand_header_link)=%%" target="_blank" alias="Brand_header_link"><img src="%%=RedirectTo(@brand_header_img)=%%" style="max-width: 640px; width: 100%;" width="640" alt="%%=v(@brand_header_alt_text)=%%"></a>
+                       </td>
+                     </tr>
+                   </table>
+                 </td>
+               </tr>
+             <!--
+            %%[ENDIF]%%
+-->
+                                  </table><!--[if (gte mso 9)|(IE)]->
+                                </v:textbox>
+                              </v:rect>
+                            </td>
+                          </tr>
+                        </table>
+                      <![endif]--><!-- LOGO END --><!--[if (gte mso 9)|(IE)]>
+                            </td>
+                            </tr>
+                            </table>
+                            <![endif]-->
+                        </center>
+                        <center>
+                        <table width="640" border="0" cellspacing="0" cellpadding="0" class="m-shell">
+                            <tr>
+                            <td class="td" style="width:640px; min-width:640px; font-size:0pt; line-height:0pt; padding:0; margin:0; font-weight:normal;">
+                                <!-- Image and Text - 1 -->
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+    <tr>
+    <td background="https://image.em.pepsico.com/lib/fe4515707564067f771671/m/1/9c46bd43-ff42-44a8-8d9d-416391e6c166.gif" bgcolor="#00b4ff" width="640" height="1001" valign="top" alt="Happy Birthday!" style="-webkit-background-size: cover; background-size: cover; background-position: center 0; width: 100%"  class="bg">
+    <!--[if gte mso 9]>
+    <v:rect xmlns:v="urn:schemas-microsoft-com:vml" fill="true" stroke="false" style="width:640px;height:1001px;">
+    <v:fill type="frame" src="https://image.em.pepsico.com/lib/fe4515707564067f771671/m/1/9c46bd43-ff42-44a8-8d9d-416391e6c166.gif" color="#00b4ff" />
+    <v:textbox inset="0,0,0,0">
+    <![endif]-->
+    <div>
+    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+    <tr>
+    <td class="m-hide" width="20" style="font-size:0pt; line-height:0pt; text-align:left;"></td>
+    <td class="py-44 mpy-20 mpx-15" style="padding-top: 44px; padding-bottom: 44px;">
+    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+    <tr>
+    <td class="mh-200" height="580" style="font-size:0pt; line-height:0pt; text-align:left;">&nbsp;</td>
+    </tr>
+    <tr>
+    <td class="fz-52 lh-56 mfz-34 mlh-38 l-white pb-20 mpt-120" style="font-family:'GTWalsheim', 'Arimo', Arial, sans-serif; min-width:auto !important; text-align:center; font-size: 52px; line-height: 56px; color:#fffffe; padding-bottom: 20px;">
+    <h1 class="fz-52 lh-56 mfz-34 mlh-38 l-white" style="font-family:'GTWalsheim', 'Arimo', Arial, sans-serif; min-width:auto !important; text-align:center; font-size: 52px; line-height: 56px; color:#fffffe;"><strong>Claim Your <span class="m-hide"><br /></span>10 Birthday Entries</strong></h1>
+    </td>
+    </tr>
+    <tr>
+    <td class="l-white fz-24 lh-28 mfz-20 mlh-24 pb-34 mpb-20" style="font-family:'Akzidenz Grotesk', 'Montserrat', Arial, sans-serif; min-width:auto !important; text-align:center; color:#fffffe; font-size: 24px; line-height: 28px; padding-bottom: 34px;">
+    <p class="l-white fz-24 lh-28 mfz-20 mlh-24" style="font-family:'Akzidenz Grotesk', 'Montserrat', Arial, sans-serif; min-width:auto !important; text-align:center; color:#fffffe; font-size: 24px; line-height: 28px;">
+    On your birthday, we&rsquo;re celebrating YOU! <span class="m-hide"><br /></span>As a treat, you have a special activity that lets <span class="m-hide"><br /></span>you claim <strong>10 entries</strong>. Claim them below!
+    </p>
+    </td>
+    </tr>
+    <tr>
+    <td class="mpb-8" align="center">
+    <!-- Button -->
+    <table border="0" cellspacing="0" cellpadding="0">
+    <tr>
+    <td class="fz-24 lh-28 mfz-20 mlh-24 l-white btnp-12-24 bg-red" style="border-radius: 5px; border-bottom: 4px solid #b81321; font-family:'GTWalsheim', 'Arimo', Arial, sans-serif; text-align:center; min-width:auto !important; font-size: 24px; line-height: 28px; color:#fffffe; mso-padding-alt:12px 24px;" bgcolor="#db1d2c"><a href="%%=RedirectTo(@link)=%%" target="_blank" alias="Hero_CTA" class="link l-white" style="display: block; padding: 12px 24px; text-decoration:none; color:#fffffe;"><span class="link l-white" style="text-decoration:none; color:#fffffe;"><strong>Claim Your Present</strong></span></a></td>
+    </tr>
+    </table>
+    <!-- END Button -->
+    </td>
+    </tr>
+    </table>
+    </td>
+    <td class="m-hide" width="20" style="font-size:0pt; line-height:0pt; text-align:left;"></td>
+    </tr>
+    </table>
+    </div>
+    <!--[if gte mso 9]>
+    </v:textbox>
+    </v:rect>
+    <![endif]-->
+    </td>
+    </tr>
+    </table>
+    <!-- END Image and Text - 1 -->
+    <!-- Image and Text - 2 -->
+    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+    <tr>
+    <td class="fluid-img" style="font-size:0pt; line-height:0pt; text-align:center;"><a href="https://tastyrewards.jebbit.com/ytcmxewt?L=Email" target="_blank" alias="Banner_2_Image"><img src="https://image.em.pepsico.com/lib/fe4515707564067f771671/m/1/23b8d849-828e-495c-9e81-c6484c88be2c.png" width="640" height="402" border="0" alt="Thinking of something else?" style="width: 100%"  /></a></td>
+    </tr>
+    <tr>
+    <td class="py-64 px-20 mpy-20 mpx-15" style="padding-top: 64px; padding-bottom: 64px; padding-left: 20px; padding-right: 20px;">
+    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+    <tr>
+    <td class="fz-52 lh-56 mfz-34 mlh-38 c-blue l-blue pb-20" style="font-family:'GTWalsheim', 'Arimo', Arial, sans-serif; min-width:auto !important; text-align:center; font-size: 52px; line-height: 56px; color:#0e4caa; padding-bottom: 20px;">
+    <h1 class="fz-52 lh-56 mfz-34 mlh-38 c-blue l-blue" style="font-family:'GTWalsheim', 'Arimo', Arial, sans-serif; min-width:auto !important; text-align:center; font-size: 52px; line-height: 56px; color:#0e4caa;"><strong>Let Us Know What <span class="m-hide"><br /></span>You Like</strong></h1>
+    </td>
+    </tr>
+    <tr>
+    <td class="c-white l-white fz-24 lh-28 mfz-20 mlh-24 pb-34 mpb-20" style="font-family:'Akzidenz Grotesk', 'Montserrat', Arial, sans-serif; min-width:auto !important; text-align:center; color:#3d3c3c; font-size: 24px; line-height: 28px; padding-bottom: 34px;">
+    <p class="c-white l-white fz-24 lh-28 mfz-20 mlh-24" style="font-family:'Akzidenz Grotesk', 'Montserrat', Arial, sans-serif; min-width:auto !important; text-align:center; color:#3d3c3c; font-size: 24px; line-height: 28px;">
+    Looking for something other than entries? <span class="m-hide"><br /></span>Tell us what other rewards you have in mind <span class="m-hide"><br /></span>with the link below!
+    </p>
+    </td>
+    </tr>
+    <tr>
+    <td align="center">
+    <!-- Button -->
+    <table border="0" cellspacing="0" cellpadding="0">
+    <tr>
+    <td class="fz-24 lh-28 mfz-20 mlh-24 l-white btnp-12-24 bg-red" style="border-radius: 5px; border-bottom: 4px solid #b81321; font-family:'GTWalsheim', 'Arimo', Arial, sans-serif; text-align:center; min-width:auto !important; font-size: 24px; line-height: 28px; color:#fffffe; mso-padding-alt:12px 24px;" bgcolor="#db1d2c"><a href="https://tastyrewards.jebbit.com/ytcmxewt?L=Email" target="_blank" alias="Banner_2_CTA" class="link l-white" style="display: block; padding: 12px 24px; text-decoration:none; color:#fffffe;"><span class="link l-white" style="text-decoration:none; color:#fffffe;"><strong>Get Started</strong></span></a></td>
+    </tr>
+    </table>
+    <!-- END Button -->
+    </td>
+    </tr>
+    </table>
+    </td>
+    </tr>
+    </table>
+    <!-- END Image and Text - 2 -->
+    <!-- Footer -->
+    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+    <tr>
+    <td class="py-54 px-20 mpy-20 mpx-15 bg-blue" bgcolor="#0d4ca9" style="padding-top: 54px; padding-bottom: 54px; padding-left: 20px; padding-right: 20px;">
+    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+    <tr>
+    <td class="pb-34 mpb-20" style="font-size:0pt; line-height:0pt; text-align:center; padding-bottom: 34px;"><a href="https://www.tastyrewards.com/en-us/" target="_blank" alias="Footer_Logo"><img src="https://image.em.pepsico.com/lib/fe4515707564067f771671/m/1/729b6c3c-da25-432b-931b-0d3f75a16ebb.png" width="132" height="120" border="0" alt="PepsiCo Tasty Rewards" style="max-width:132px; width: 100%" /></a></td>
+    </tr>
+    <tr>
+        <td class="fz-10 lh-18 l-white" style="font-family:'Akzidenz Grotesk', 'Montserrat', Arial, sans-serif; min-width:auto !important; font-size: 10px; line-height: 18px; color:#fffffe; text-align:center; padding-bottom: 6px;">
+            %%=v(@asterisk)=%%
+        </td>
+    </tr>
+    <tr>
+    <td class="fz-10 lh-18 l-white" style="font-family:'Akzidenz Grotesk', 'Montserrat', Arial, sans-serif; min-width:auto !important; font-size: 10px; line-height: 18px; color:#fffffe; text-align:center;">
+    <p class="fz-10 lh-18 l-white" style="font-family:'Akzidenz Grotesk', 'Montserrat', Arial, sans-serif; min-width:auto !important; font-size: 10px; line-height: 18px; color:#fffffe; text-align:center;">
+    The birthday activity will be available for up to 10 days after the date you’ve provided for your birthdate.  If no exact date is provided, then it will begin on the first day of the month provided.   If no birthdate is provided, please enter that information, and check back tomorrow.  This activity is only available to be claimed once per account holder in a calendar year.
+    <br /><br />
+    We sent this email to: <a href="mailto:%%emailaddr%%" target="_blank" alias="email_address" style="cursor: auto; text-decoration:none; color:#fffffe;" class="link l-white"><span class="link l-white" style="text-decoration:none; color:#fffffe;">%%emailaddr%%</span></a> since you are registered as a member of our PepsiCo Tasty Rewards program. You may unsubscribe at any time by <a href="%%unsub_center_url%%" alias="Unsubscribe_footer" target="_blank" class="link l-white" style="text-decoration:none; color:#fffffe;"><span class="link l-white" style="text-decoration:none; color:#fffffe;">clicking the link below</span></a>.
+    <br /><br />
+    <a href="%%profile_center_url%%" target="_blank" alias="Preference_center" class="link l-white" style="text-decoration:none; color:#fffffe;"><span class="link l-white" style="text-decoration:none; color:#fffffe;">Manage Preferences</span></a>
+    &nbsp;&nbsp;|&nbsp;&nbsp;<a href="%%unsub_center_url%%" target="_blank" alias="Unsubscribe_footer" class="link l-white" style="text-decoration:none; color:#fffffe;"><span class="link l-white" style="text-decoration:none; color:#fffffe;">Unsubscribe</span></a>
+    &nbsp;&nbsp;|&nbsp;&nbsp;<a href="https://contact.pepsico.com/pepsico/privacy-policy" target="_blank" alias="Privacy_footer" class="link l-white" style="text-decoration:none; color:#fffffe;"><span class="link l-white" style="text-decoration:none; color:#fffffe;">Privacy Policy</span></a> 
+    &nbsp;&nbsp;|&nbsp;&nbsp;<a href="https://contact.pepsico.com/pepsico/terms-conditions" target="_blank" alias="Terms_footer" class="link l-white" style="text-decoration:none; color:#fffffe;"><span class="link l-white" style="text-decoration:none; color:#fffffe;">Terms of Use</span></a> 
+    &nbsp;&nbsp;|&nbsp;&nbsp;<a href="https://contact.pepsico.com/tastyrewardsus" target="_blank" alias="Contact_footer" class="link l-white" style="text-decoration:none; color:#fffffe;"><span class="link l-white" style="text-decoration:none; color:#fffffe;">Contact Us</span></a>
+    &nbsp;&nbsp;|&nbsp;&nbsp;<a href="%%view_email_url%%" target="_blank" alias="Browser_footer" class="link l-white" style="text-decoration:none; color:#fffffe;"><span class="link l-white" style="text-decoration:none; color:#fffffe;">View in browser</span></a>
+    <br /><br />
+    &copy; %%xtyear%% Pep&zwj;siCo, In&zwj;c. 70&zwj;0 Ander&zwj;son Hi&zwj;ll R&zwj;d, Purc&zwj;hase, N&zwj;Y 10&zwj;577   |  <a href="tel:+18332282789" target="_blank" alias="zip_code" class="link l-white" style="text-decoration:none; color:#fffffe;"><span class="link l-white" style="text-decoration:none; color:#fffffe;">833-228-2789</span></a>
+    <br /><br />
+    <a href="https://www.tastyrewards.com/en-us/" target="_blank" alias="tastyrewards_footer_end" class="link l-white" style="text-decoration:none; color:#fffffe;"><span class="link l-white" style="text-decoration:none; color:#fffffe;">www.tastyrewards.com/en-us</span></a>
+    <br /><br />
+    All trademarks and logos are property of their respective owners.
+    </p>
+    </td>
+    </tr>
+    <tr>
+        <td class="fz-10 lh-18 l-white" style="font-family:'Akzidenz Grotesk', 'Montserrat', Arial, sans-serif; min-width:auto !important; font-size: 10px; line-height: 18px; color:#fffffe; text-align:center; padding-top: 6px;">
+            %%=v(@disclaimer)=%%
+        </td>
+    </tr>
+    </table>
+    </td>
+    </tr>
+    </table>
+    <!-- END Footer -->
+    <custom name="opencounter" type="tracking" />
+    <custom name="usermatch" type="tracking" />
+    </td>
+    </tr>
+    </table>
+    </td>
+    </tr>
+    </table>
+    </center>
+    </body>
+    </html>
+            %%[ ENDIF ]%%
+
+            %%[
+                IF NOT EMPTY(@points) AND @points == 0 THEN
+                    SET @asterisk = "*Log in to your Account Dashboard to confirm the actual number of Entries you have to use to enter into a Sweepstakes. Recent activity may not be reflected in the Entries shown above and your actual Entries available may be different."
+                    SET @disclaimer = "Unused Entries will expire after 12 months of no activity in your Account or 12 months following the date on which you completed an Activity, earned an Entry but did not use for a drawing (any unused Entries remaining in an Account after that time will be forfeited)."
+            ]%%
+<div style="display: none">
+                %%[
+                    SET @firstName = FirstName
+                    IF empty(@firstName) OR @firstName == "FIRSTNAME" THEN
+                        SET @subjectLine = "Valued Member, your birthday entries are waiting for you! 🎁"
+                        SET @ribbon = 'Happy Birthday!'
+                    ELSE
+                        SET @subjectLine = CONCAT(TRIM(PROPERCASE(@firstName)), ", Your birthday entries are waiting for you! 🎁")
+                        SET @ribbon = concat('Happy Birthday, ', ProperCase(@firstName))
+                    ENDIF
+                    /* Modular Brands Coding */
+                    SET @activeLoyalty = Lookup("ent.PTR - Birthday Journey - EN QA_PTR - Birthday J_1sgDo000000008pIAA_85RDo000000007IMAQ", "Brand_Affinity", "emailAddress", emailAddress)
+                    IF @activeLoyalty != "PTR" THEN
+                        set @brand_header_img = Lookup("PTR_Modular_Brands_Attributes", "Header Image URL", "Brand Short Name", @activeLoyalty)
+                        set @brand_header_link = Lookup("PTR_Modular_Brands_Attributes", "Header Link", "Brand Short Name", @activeLoyalty)
+                        set @brand_header_alt_text = Lookup("PTR_Modular_Brands_Attributes", "Header Alt Text", "Brand Short Name", @activeLoyalty)
+                        SET @link = LookUp("PTR_Modular_Brands_Attributes", "Header Link", "Brand Short Name", @activeLoyalty)
+                    ELSE
+                        SET @link = "https://www.tastyrewards.com/en-us/dashboard?__locale__=en#activity"
+                    ENDIF
+                ]%%
+</div>
+         <center>    
+          <!--[if (gte mso 9)|(IE)]>
+                                <table width="640" style="width: 640px;" cellpadding="0" cellspacing="0" border="0" role="presentation">
+                                <tr>
+                                <td width="640" style="background-color:#0057A2; text-align: center;">
+                           <![endif]--><!-- PERSONALIZATION RIBBON START --><table border="0" cellpadding="0" cellspacing="0" role="presentation" style="max-width: 640px; width: 100%; text-align: center">
+           
+                          <tr>
+                              <td>
+                               <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="background-color: #0057a2; text-align: center">
+                                
+                                 <tr>
+                                  <td class="bg-blue l-white a" width="640">
+                                  </td><td class="bg-blue l-white a" style="
+                                                     width: 100%;
+                                                     color: #ffffff;
+                                                     font-family: 'Akzidenz Grotesk', 'Montserrat', sans-serif,
+                                                       Helvetica, Arial;
+                                                     font-size: 12px;
+                                                     line-height: 130%;
+                                                     padding-top: 16px;
+                                                     padding-bottom: 4px;
+                                                   ">
+                                   %%=v(@ribbon)=%%</td></tr><tr>
+                                  <td class="bg-blue l-white a" width="640">
+                                  </td><td class="bg-blue l-white a" style="
+                                                     width: 100%;
+                                                     color: #ffffff;
+                                                     font-family: 'Akzidenz Grotesk', 'Montserrat', sans-serif,
+                                                       Helvetica, Arial;
+                                                     font-size: 12px;
+                                                     font-weight: 700;
+                                                     padding-bottom: 14px;
+                                                   ">
+                                   <a alias="view_in_browser_header" href="%%view_email_url%%" style="color: #ffffff; text-decoration: none" target="_blank">View in browser</a></td></tr></table></td></tr></table><!-- PERSONALIZATION RIBBON END -->
+      <!--[if (gte mso 9)|(IE)]->
+                          <table cellpadding="0" cellspacing="0" border="0" width="640">
+                            <tr>
+                              <td width="640" height="151" style="">                
+                                 <v:rect xmlns:v="urn:schemas-microsoft-com:vml" fill="true" stroke="false" style="width:640px;height:151px;">
+                                 <v:fill type="frame" src="https://image.em.pepsico.com/lib/fe4515707564067f771671/m/3/6e7f0f29-d87c-45be-8243-006faaa587be.png" />
+                                 <v:textbox inset="0,0,0,0">               
+                        <![endif]--><table background="https://image.em.pepsico.com/lib/fe4515707564067f771671/m/3/6e7f0f29-d87c-45be-8243-006faaa587be.png" border="0" cellpadding="0" cellspacing="0" role="presentation" style="max-width: 640px; width: 100%; text-align: center; background-size: cover;">
+        
+                          <tr>
+                              <td style="padding: 0; text-align: left">          
+                               <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="display: inline-block">
+                                  <tr>
+                                      <td height="151" style="padding: 0; text-align: center; vertical-align: center;" width="201">
+                                          <a alias="logo_header" conversion="false" data-linkto="https://" href="https://www.tastyrewards.com/en-us/" target="_blank" title=""><img alt="PepsiCo Tasty Rewards" height="103.27" src="https://image.em.pepsico.com/lib/fe4515707564067f771671/m/3/5711fd2b-69e0-400d-9489-b668ba2419af.png" style="width: 113.59px; height: 103.27px; padding: 0px; text-align: center;" width="113.59"></a>
+                                      </td>
+                                      <td height="151" style="border-right: 0.5px solid #ffffff; opacity: 30%">
+                                      </td>
+                                      <td width="20">
+                                      </td>
+                                      <a alias="header_link" conversion="false" data-linkto="https://" href="https://www.tastyrewards.com/en-us/" target="_blank" title="">
+                                      <td class="l-white a mb-cta-text" style="font-family: 'GTWalsheim', 'Arimo', sans-serif, Helvetica, Arial;
+                                                                                  font-size: 30px; font-weight: 700; color: #ffffff;
+                                                                                  mso-line-height-rule: exactly; line-height: 28px;
+                                                                                  text-align: center;" width="400">
+                                                     Out of Entries?<br>
+                                                     <!--[if (gte mso 9)|(IE)]->
+                <style type="text/css" media="all"
+                class="link l-white" <a href="https://www.tastyrewards.com/en-us/" target="_blank" alias="" class="link l-white" style="text-decoration:none; color:#fffffe;"><span class="link l-white" style="text-decoration:none; color:#fffffe;">Earn more now!&nbsp;</span></a></style></td>
+                             </tr>
+                             </table>
+                             <![endif]-->
+                                                     <a class="l-white a" alias="header_link" conversion="false" data-linkto="https://" href="https://www.tastyrewards.com/en-us/" target="_blank" title="" style="text-decoration: none; color: #ffffff !important;">
+                                                      Earn more now!</a>
+                                                      <!--[if (gte mso 9)|(IE)]>
+                  </td>
+                  </tr>
+                  </table>
+                  <![endif]-->   
+                                                                                                  
+                                      </td>
+                                      </a>
+                                      <td width="5">
+                                      </td>
+                                  </tr>
+                              </table>
+                          </td>
+                      </tr>
+           <!--
+                %%[ IF @activeLoyalty != "PTR" THEN ]%%
+-->
+               <tr>
+                  <td valign="middle">
+                   <table cellpadding='0' cellspacing='0' border='0' role='presentation' style="max-width: 640px; width: 100%;" width="640">
+                     <tr>
+                       <td style="font-size: 0; padding: 0">
+                         <a href="%%=RedirectTo(@brand_header_link)=%%" target="_blank" alias="Brand_header_link"><img src="%%=RedirectTo(@brand_header_img)=%%" style="max-width: 640px; width: 100%;" width="640" alt="%%=v(@brand_header_alt_text)=%%"></a>
+                       </td>
+                     </tr>
+                   </table>
+                 </td>
+               </tr>
+             <!--
+                    %%[ENDIF]%%
+-->
+                      </table><!--[if (gte mso 9)|(IE)]->
+                      </v:textbox>
+                    </v:rect>
+                  </td>
+                </tr>
+              </table>
+            <![endif]--><!-- LOGO END --><!--[if (gte mso 9)|(IE)]>
+                  </td>
+                  </tr>
+                  </table>
+                  <![endif]-->
+         </center>
+         <center>
+            <table width="640" border="0" cellspacing="0" cellpadding="0" class="m-shell">
+                <tr>
+                <td class="td" style="width:640px; min-width:640px; font-size:0pt; line-height:0pt; padding:0; margin:0; font-weight:normal;">
+                    <!-- Image and Text - 1 -->
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td background="https://image.em.pepsico.com/lib/fe4515707564067f771671/m/1/9c46bd43-ff42-44a8-8d9d-416391e6c166.gif" bgcolor="#00b4ff" width="640" height="1001" valign="top" alt="Happy Birthday!" style="-webkit-background-size: cover; background-size: cover; background-position: center 0; width: 100%"  class="bg">
+<!--[if gte mso 9]>
+<v:rect xmlns:v="urn:schemas-microsoft-com:vml" fill="true" stroke="false" style="width:640px;height:1001px;">
+<v:fill type="frame" src="https://image.em.pepsico.com/lib/fe4515707564067f771671/m/1/9c46bd43-ff42-44a8-8d9d-416391e6c166.gif" color="#00b4ff" />
+<v:textbox inset="0,0,0,0">
+<![endif]-->
+<div>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td class="m-hide" width="20" style="font-size:0pt; line-height:0pt; text-align:left;"></td>
+<td class="py-44 mpy-20 mpx-15" style="padding-top: 44px; padding-bottom: 44px;">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td class="mh-200" height="580" style="font-size:0pt; line-height:0pt; text-align:left;">&nbsp;</td>
+</tr>
+<tr>
+<td class="fz-52 lh-56 mfz-34 mlh-38 l-white pb-20 mpt-120" style="font-family:'GTWalsheim', 'Arimo', Arial, sans-serif; min-width:auto !important; text-align:center; font-size: 52px; line-height: 56px; color:#fffffe; padding-bottom: 20px;">
+<h1 class="fz-52 lh-56 mfz-34 mlh-38 l-white" style="font-family:'GTWalsheim', 'Arimo', Arial, sans-serif; min-width:auto !important; text-align:center; font-size: 52px; line-height: 56px; color:#fffffe;"><strong>Claim Your <span class="m-hide"><br /></span>10 Birthday Entries</strong></h1>
+</td>
+</tr>
+<tr>
+<td class="l-white fz-24 lh-28 mfz-20 mlh-24 pb-34 mpb-20" style="font-family:'Akzidenz Grotesk', 'Montserrat', Arial, sans-serif; min-width:auto !important; text-align:center; color:#fffffe; font-size: 24px; line-height: 28px; padding-bottom: 34px;">
+<p class="l-white fz-24 lh-28 mfz-20 mlh-24" style="font-family:'Akzidenz Grotesk', 'Montserrat', Arial, sans-serif; min-width:auto !important; text-align:center; color:#fffffe; font-size: 24px; line-height: 28px;">
+On your birthday, we&rsquo;re celebrating YOU! <span class="m-hide"><br /></span>As a treat, you have a special activity that lets <span class="m-hide"><br /></span>you claim <strong>10 entries</strong>. Claim them below!
+</p>
+</td>
+</tr>
+<tr>
+<td class="mpb-8" align="center">
+<!-- Button -->
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td class="fz-24 lh-28 mfz-20 mlh-24 l-white btnp-12-24 bg-red" style="border-radius: 5px; border-bottom: 4px solid #b81321; font-family:'GTWalsheim', 'Arimo', Arial, sans-serif; text-align:center; min-width:auto !important; font-size: 24px; line-height: 28px; color:#fffffe; mso-padding-alt:12px 24px;" bgcolor="#db1d2c"><a href="%%=RedirectTo(@link)=%%" target="_blank" alias="Hero_CTA" class="link l-white" style="display: block; padding: 12px 24px; text-decoration:none; color:#fffffe;"><span class="link l-white" style="text-decoration:none; color:#fffffe;"><strong>Claim Your Present</strong></span></a></td>
+</tr>
+</table>
+<!-- END Button -->
+</td>
+</tr>
+</table>
+</td>
+<td class="m-hide" width="20" style="font-size:0pt; line-height:0pt; text-align:left;"></td>
+</tr>
+</table>
+</div>
+<!--[if gte mso 9]>
+</v:textbox>
+</v:rect>
+<![endif]-->
+</td>
+</tr>
+</table>
+<!-- END Image and Text - 1 -->
+<!-- Image and Text - 2 -->
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td class="fluid-img" style="font-size:0pt; line-height:0pt; text-align:center;"><a href="https://tastyrewards.jebbit.com/ytcmxewt?L=Email" target="_blank" alias="Banner_2_Image"><img src="https://image.em.pepsico.com/lib/fe4515707564067f771671/m/1/23b8d849-828e-495c-9e81-c6484c88be2c.png" width="640" height="402" border="0" alt="Thinking of something else?" style="width: 100%"  /></a></td>
+</tr>
+<tr>
+<td class="py-64 px-20 mpy-20 mpx-15" style="padding-top: 64px; padding-bottom: 64px; padding-left: 20px; padding-right: 20px;">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td class="fz-52 lh-56 mfz-34 mlh-38 c-blue l-blue pb-20" style="font-family:'GTWalsheim', 'Arimo', Arial, sans-serif; min-width:auto !important; text-align:center; font-size: 52px; line-height: 56px; color:#0e4caa; padding-bottom: 20px;">
+<h1 class="fz-52 lh-56 mfz-34 mlh-38 c-blue l-blue" style="font-family:'GTWalsheim', 'Arimo', Arial, sans-serif; min-width:auto !important; text-align:center; font-size: 52px; line-height: 56px; color:#0e4caa;"><strong>Let Us Know What <span class="m-hide"><br /></span>You Like</strong></h1>
+</td>
+</tr>
+<tr>
+<td class="c-white l-white fz-24 lh-28 mfz-20 mlh-24 pb-34 mpb-20" style="font-family:'Akzidenz Grotesk', 'Montserrat', Arial, sans-serif; min-width:auto !important; text-align:center; color:#3d3c3c; font-size: 24px; line-height: 28px; padding-bottom: 34px;">
+<p class="c-white l-white fz-24 lh-28 mfz-20 mlh-24" style="font-family:'Akzidenz Grotesk', 'Montserrat', Arial, sans-serif; min-width:auto !important; text-align:center; color:#3d3c3c; font-size: 24px; line-height: 28px;">
+Looking for something other than entries? <span class="m-hide"><br /></span>Tell us what other rewards you have in mind <span class="m-hide"><br /></span>with the link below!
+</p>
+</td>
+</tr>
+<tr>
+<td align="center">
+<!-- Button -->
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td class="fz-24 lh-28 mfz-20 mlh-24 l-white btnp-12-24 bg-red" style="border-radius: 5px; border-bottom: 4px solid #b81321; font-family:'GTWalsheim', 'Arimo', Arial, sans-serif; text-align:center; min-width:auto !important; font-size: 24px; line-height: 28px; color:#fffffe; mso-padding-alt:12px 24px;" bgcolor="#db1d2c"><a href="https://tastyrewards.jebbit.com/ytcmxewt?L=Email" target="_blank" alias="Banner_2_CTA" class="link l-white" style="display: block; padding: 12px 24px; text-decoration:none; color:#fffffe;"><span class="link l-white" style="text-decoration:none; color:#fffffe;"><strong>Get Started</strong></span></a></td>
+</tr>
+</table>
+<!-- END Button -->
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<!-- END Image and Text - 2 -->
+<!-- Footer -->
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td class="py-54 px-20 mpy-20 mpx-15 bg-blue" bgcolor="#0d4ca9" style="padding-top: 54px; padding-bottom: 54px; padding-left: 20px; padding-right: 20px;">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td class="pb-34 mpb-20" style="font-size:0pt; line-height:0pt; text-align:center; padding-bottom: 34px;"><a href="https://www.tastyrewards.com/en-us/" target="_blank" alias="Footer_Logo"><img src="https://image.em.pepsico.com/lib/fe4515707564067f771671/m/1/729b6c3c-da25-432b-931b-0d3f75a16ebb.png" width="132" height="120" border="0" alt="PepsiCo Tasty Rewards" style="max-width:132px; width: 100%" /></a></td>
+</tr>
+<tr>
+    <td class="fz-10 lh-18 l-white" style="font-family:'Akzidenz Grotesk', 'Montserrat', Arial, sans-serif; min-width:auto !important; font-size: 10px; line-height: 18px; color:#fffffe; text-align:center; padding-bottom: 6px;">
+        %%=v(@asterisk)=%%
+    </td>
+</tr>
+<tr>
+<td class="fz-10 lh-18 l-white" style="font-family:'Akzidenz Grotesk', 'Montserrat', Arial, sans-serif; min-width:auto !important; font-size: 10px; line-height: 18px; color:#fffffe; text-align:center;">
+<p class="fz-10 lh-18 l-white" style="font-family:'Akzidenz Grotesk', 'Montserrat', Arial, sans-serif; min-width:auto !important; font-size: 10px; line-height: 18px; color:#fffffe; text-align:center;">
+The birthday activity will be available for up to 10 days after the date you’ve provided for your birthdate.  If no exact date is provided, then it will begin on the first day of the month provided.   If no birthdate is provided, please enter that information, and check back tomorrow.  This activity is only available to be claimed once per account holder in a calendar year.
+<br /><br />
+We sent this email to: <a href="mailto:%%emailaddr%%" target="_blank" alias="email_address" style="cursor: auto; text-decoration:none; color:#fffffe;" class="link l-white"><span class="link l-white" style="text-decoration:none; color:#fffffe;">%%emailaddr%%</span></a> since you are registered as a member of our PepsiCo Tasty Rewards program. You may unsubscribe at any time by <a href="%%unsub_center_url%%" alias="Unsubscribe_footer" target="_blank" class="link l-white" style="text-decoration:none; color:#fffffe;"><span class="link l-white" style="text-decoration:none; color:#fffffe;">clicking the link below</span></a>.
+<br /><br />
+<a href="%%profile_center_url%%" target="_blank" alias="Preference_center" class="link l-white" style="text-decoration:none; color:#fffffe;"><span class="link l-white" style="text-decoration:none; color:#fffffe;">Manage Preferences</span></a>
+&nbsp;&nbsp;|&nbsp;&nbsp;<a href="%%unsub_center_url%%" target="_blank" alias="Unsubscribe_footer" class="link l-white" style="text-decoration:none; color:#fffffe;"><span class="link l-white" style="text-decoration:none; color:#fffffe;">Unsubscribe</span></a>
+&nbsp;&nbsp;|&nbsp;&nbsp;<a href="https://contact.pepsico.com/pepsico/privacy-policy" target="_blank" alias="Privacy_footer" class="link l-white" style="text-decoration:none; color:#fffffe;"><span class="link l-white" style="text-decoration:none; color:#fffffe;">Privacy Policy</span></a> 
+&nbsp;&nbsp;|&nbsp;&nbsp;<a href="https://contact.pepsico.com/pepsico/terms-conditions" target="_blank" alias="Terms_footer" class="link l-white" style="text-decoration:none; color:#fffffe;"><span class="link l-white" style="text-decoration:none; color:#fffffe;">Terms of Use</span></a> 
+&nbsp;&nbsp;|&nbsp;&nbsp;<a href="https://contact.pepsico.com/tastyrewardsus" target="_blank" alias="Contact_footer" class="link l-white" style="text-decoration:none; color:#fffffe;"><span class="link l-white" style="text-decoration:none; color:#fffffe;">Contact Us</span></a>
+&nbsp;&nbsp;|&nbsp;&nbsp;<a href="%%view_email_url%%" target="_blank" alias="Browser_footer" class="link l-white" style="text-decoration:none; color:#fffffe;"><span class="link l-white" style="text-decoration:none; color:#fffffe;">View in browser</span></a>
+<br /><br />
+&copy; %%xtyear%% Pep&zwj;siCo, In&zwj;c. 70&zwj;0 Ander&zwj;son Hi&zwj;ll R&zwj;d, Purc&zwj;hase, N&zwj;Y 10&zwj;577   |  <a href="tel:+18332282789" target="_blank" alias="zip_code" class="link l-white" style="text-decoration:none; color:#fffffe;"><span class="link l-white" style="text-decoration:none; color:#fffffe;">833-228-2789</span></a>
+<br /><br />
+<a href="https://www.tastyrewards.com/en-us/" target="_blank" alias="tastyrewards_footer_end" class="link l-white" style="text-decoration:none; color:#fffffe;"><span class="link l-white" style="text-decoration:none; color:#fffffe;">www.tastyrewards.com/en-us</span></a>
+<br /><br />
+All trademarks and logos are property of their respective owners.
+</p>
+</td>
+</tr>
+<tr>
+    <td class="fz-10 lh-18 l-white" style="font-family:'Akzidenz Grotesk', 'Montserrat', Arial, sans-serif; min-width:auto !important; font-size: 10px; line-height: 18px; color:#fffffe; text-align:center; padding-top: 6px;">
+        %%=v(@disclaimer)=%%
+    </td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<!-- END Footer -->
+<custom name="opencounter" type="tracking" />
+<custom name="usermatch" type="tracking" />
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</center>
+</body>
+</html>
+                    %%[ ENDIF ]%%

@@ -1,0 +1,65 @@
+%%[
+/* variables */
+var @Active_Start_Date1,@Active_End_Date1,@Priority1,@Brand1,@English_Image1,@English_Title1,@English_Description1,@LinkURL1
+var @Active_Start_Date2,@Active_End_Date2,@Priority2,@Brand2,@English_Image2,@English_Title2,@English_Description2,@LinkURL2
+ var @activityCount , @points
+/* Find the position in the JSON for activities, date created and points balance */
+   set @json = Lookup("ent.PTR - Zero Entries Journey - EN QA_PTR - Zero Entri_1sgDo000000008mIAA_85RDo000000006uMAA_I", "LoyaltyProgramMember", "EmailAddress", emailAddress)
+ 
+]%%
+
+<script runat="server">
+    Platform.Load("core", "1.1.1");
+
+ // Retrieve the AMPscript variable
+    var  jsonString = Variable.GetValue("@json");
+   
+   // Step 1: Parse the JSON data
+    var data = Platform.Function.ParseJSON(jsonString);
+
+    // Step 2: Extract the Activity_Id values
+    var activityIds = [];
+    var activities = data[0].Loyalty_Activities_Available; //Points_Balance
+    var pointsBalance = data[0].Points_Balance;
+     Platform.Variable.SetValue("@points",pointsBalance);
+    for (var i = 0; i < activities.length; i++) {
+        activityIds.push(activities[i].Activity_Id);
+    }
+
+    // Step 3: Retrieve matching records from PEPL_Activity_Lookup DE
+    var deName = "ent.PEPL_Activity_Lookup"; // Replace with your Data Extension name
+    
+    var matchingRecords = [];
+    for (var j = 0; j < activityIds.length; j++) {
+        var rows = Platform.Function.LookupRows(deName, "Campaign_Id", activityIds[j]);
+        if (rows.length > 0) {
+            matchingRecords = matchingRecords.concat(rows);
+        }
+    }
+     var activityLookuptwoRec = [];
+     var activityCount = matchingRecords.length;
+     Platform.Variable.SetValue("@activityCount", activityCount);
+     if(matchingRecords.length >=2){
+     /// ###################Activity One Code ################################### /////////////
+     Platform.Variable.SetValue("@Active_Start_Date1", matchingRecords[0].Active_Start_Date);
+     Platform.Variable.SetValue("@Active_End_Date1", matchingRecords[0].Active_End_Date);
+     Platform.Variable.SetValue("@Priority1", matchingRecords[0].Priority);
+     Platform.Variable.SetValue("@Brand1", matchingRecords[0].Brand);
+     Platform.Variable.SetValue("@English_Image1", matchingRecords[0].English_Image);
+     Platform.Variable.SetValue("@English_Title1", matchingRecords[0].English_Title);
+     Platform.Variable.SetValue("@English_Description1", matchingRecords[0].English_Description);
+     Platform.Variable.SetValue("@LinkURL1", matchingRecords[0].LinkURL);
+
+      /// ###################Activity two Code ################################### /////////////
+     Platform.Variable.SetValue("@Active_Start_Date2", matchingRecords[1].Active_Start_Date);
+     Platform.Variable.SetValue("@Active_End_Date2", matchingRecords[1].Active_End_Date);
+     Platform.Variable.SetValue("@Priority2", matchingRecords[1].Priority);
+     Platform.Variable.SetValue("@Brand2", matchingRecords[1].Brand);
+     Platform.Variable.SetValue("@English_Image2", matchingRecords[1].English_Image);
+     Platform.Variable.SetValue("@English_Title2", matchingRecords[1].English_Title);
+     Platform.Variable.SetValue("@English_Description2", matchingRecords[1].English_Description);
+     Platform.Variable.SetValue("@LinkURL2", matchingRecords[1].LinkURL);         
+     }else{
+      Platform.Variable.SetValue("@activityCount", activityCount);
+     }
+</script>

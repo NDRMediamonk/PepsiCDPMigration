@@ -1,0 +1,900 @@
+
+<!--%%[
+SET @ribbon = IIF(EMPTY(FirstName) OR FirstName == 'FIRSTNAME', 'Ready to take a giveaway vacay?', CONCAT(TRIM(PROPERCASE(FirstName)), ', ready to take a giveaway vacay?'))
+
+ /*Starry Banner */
+ SET @rows = LookUpRows("ent.Starry_SourceIDs", "Return", "true")
+ SET @rowNumber = RowCount(@rows)
+ SET @display = 1
+ 
+/*IF @rowNumber > 0 THEN
+ FOR @i = 1 TO @rowNumber DO
+  SET @sourceID = Field(Row(@rows, @i), "SourceID")
+  
+  IF NOT EMPTY(LookUp("ent.PP_Master_Subscription", "SubscriptionDate", "SourceID", @sourceID, "SubscriberKey", _SubscriberKey)) THEN
+  
+  SET @display = 0
+  
+  ENDIF
+  
+  NEXT @i
+
+ELSE
+ RaiseError("Starry_SourceIDs data extension is empty")
+ENDIF*/
+
+/*CDP DE Changes start*/
+]%% -->
+<script runat="server" language="JavaScript">
+  var emailAddress = Platform.Recipient.GetAttributeValue('emailAddress');
+  var payloadString = Platform.Recipient.GetAttributeValue('LoyaltyProgramMember');
+  var payload = Platform.Function.ParseJSON(payloadString);
+  if (payload !== null) {
+    var row = payload[0];
+    var points = row.Points_Balance;
+    // include here the Incomplete Activities pull when the data is ready
+  }
+  Platform.Variable.SetValue("@points", points);
+    // include here the Incomplete Activities SetValue when the data is ready
+</script>
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
+<head>
+ <!--[if gte mso 9]>
+ <xml>
+  <o:OfficeDocumentSettings>
+  <o:AllowPNG/>
+  <o:PixelsPerInch>96</o:PixelsPerInch>
+  </o:OfficeDocumentSettings>
+ </xml>
+ <![endif]-->
+ <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+ <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+ <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+ <meta name="format-detection" content="date=no" />
+ <meta name="format-detection" content="address=no" />
+ <meta name="format-detection" content="telephone=no" />
+ <meta name="x-apple-disable-message-reformatting" />
+ <meta name="color-scheme" content="light dark">
+ <meta name="supported-color-schemes" content="light dark">
+
+ <!-- Loading Custom Fonts -->
+ <!--[if !mso]><!-->
+ <link rel="preconnect" href="https://fonts.googleapis.com">
+ <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+ <link href="https://fonts.googleapis.com/css2?family=Arimo:wght@400;500;700&family=Montserrat:wght@200;300;400;500&display=swap" rel="stylesheet" />
+ <!--<![endif]-->
+ <!-- END Loading Custom Fonts -->
+
+ <!--[if gte mso 9]>
+ <style type="text/css" media="all">
+  sup { font-size: 100% !important; }
+ </style>
+ <![endif]-->
+
+ <!-- body, html, table, thead, tbody, tr, td, div, h1, h2, h3, h4, h5, p, a, span, em, i, strong { font-family: Arial, sans-serif !important; } -->
+
+ <title>Summer sweepstakes: Cash Prizes and a Chance to Attend the Leagues Cup Tournament!☀️</title>
+
+ 
+
+ <style type="text/css" media="screen">
+  body { padding:0 !important; margin:0 auto !important; display:block !important; min-width:100% !important; width:100% !important; background:#fffffe; -webkit-text-size-adjust:none }
+  a { color:#333333; text-decoration:none }
+  p { margin:0 !important }
+  strong { font-weight: bold !important; }
+
+  .no-p { padding: 0 !important; margin: 0 !important; mso-line-height-rule:exactly; Margin: 0; }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  p,
+  ul,
+  li { padding: 0 !important; margin: 0 !important; mso-line-height-rule:exactly; Margin: 0; }
+
+  ul { list-style-position: inside !important; }
+
+  .text-preview { display: none !important; }
+
+  a.skip-main { left:-999px; position:absolute; top:auto; width:1px; height:1px; overflow:hidden; z-index:-999; }
+  a.skip-main:focus, a.skip-main:active { color: #ffffff; background-color:#ffffff; left: auto; top: auto; width: 30%; height: auto; overflow:auto; margin: 10px 35%; padding:5px; border-radius: 15px; border:4px solid yellow; text-align:center; font-size:12em; z-index:999; }
+
+  table { mso-table-lspace:0pt; mso-table-rspace:0pt; }
+  img { margin: 0 !important; -ms-interpolation-mode: bicubic; /* Allow smoother rendering of resized image in Internet Explorer */ }
+  img, a img{ border:0; outline:none; text-decoration:none; }
+  #outlook a { padding:0; }
+  .ReadMsgBody { width:100%; }
+  .ExternalClass { width:100%; }
+  div,p,a,li,td,blockquote { mso-line-height-rule:exactly; }
+  a[href^=tel],a[href^=sms] { color:inherit; text-decoration:none; }
+  .ExternalClass, .ExternalClass p, .ExternalClass td, .ExternalClass div, .ExternalClass span, .ExternalClass font { line-height:100%; }
+  a[x-apple-data-detectors] { color:inherit !important; text-decoration:none !important; font-size:inherit !important; font-family:inherit !important; font-weight:inherit !important; line-height:inherit !important; }
+  #MessageViewBody, #MessageWebViewDiv { width: 100% !important; } /* Samsung Galaxy Note 4 Samsung Mail - make email stay centered */
+  .dijitReset { color: #000001 !important; }
+  
+  
+  .btn a { display: block; text-decoration: none; }
+  .btnp-6-15 a { padding: 6px 15px; }
+  .btnp-12-25 a { padding: 12px 25px; }
+  .btnp-12-33 a { padding: 12px 33px; }
+  .btnp-10-30 a { padding: 10px 30px; }
+
+  .l-white a { color: #ffffff; }
+  .l-dark a { color: #333333; }
+  .l-grey a { color: #3d3c3c; }
+  .l-blue a { color: #0e4caa; }
+  .l-red a { color: #db1d2c; }
+  
+  .br-12-12-0-0 { border-radius: 12px 12px 0 0; }
+
+  :root {
+      color-scheme: light dark;
+      supported-color-schemes: light dark;
+    }
+
+  @media (prefers-color-scheme: dark) {
+   .bg-white { background: #fefefe !important; }
+   .bg-grey { background: #f8f8f8 !important; }
+   .bg-red { background: #db1d2c !important; }
+   .bg-blue { background: #0d4ca9 !important; }
+
+   .c-white { color: #ffffff !important; }
+   .c-dark { color: #333333 !important; }
+   .c-blue { color: #0e4caa !important; }
+   .c-red { color: #db1d2c !important; }
+   .c-grey { color: #3d3c3c !important; }
+
+   .l-white a { color: #ffffff !important; }
+   .l-dark a { color: #333333 !important; }
+   .l-blue a { color: #0e4caa !important; }
+   .l-red a { color: #db1d2c !important; }
+   .l-grey a { color: #3d3c3c !important; }
+  }
+
+  /*Add this styling for support in Outlook app (Android).*/
+  [data-ogsc] .bg-white { background: #fefefe !important; }
+  [data-ogsc] .bg-grey { background: #f8f8f8 !important; }
+  [data-ogsc] .bg-red { background: #db1d2c !important; }
+  [data-ogsc] .bg-blue { background: #0d4ca9 !important; }
+
+  [data-ogsc] .c-white { color: #ffffff !important; }
+  [data-ogsc] .c-dark { color: #333333 !important; }
+  [data-ogsc] .c-blue { color: #0e4caa !important; }
+  [data-ogsc] .c-red { color: #db1d2c !important; }
+  [data-ogsc] .c-grey { color: #3d3c3c !important; }
+
+  [data-ogsc] .l-white a { color: #ffffff !important; }
+  [data-ogsc] .l-dark a { color: #333333 !important; }
+  [data-ogsc] .l-blue a { color: #0e4caa !important; }
+  [data-ogsc] .l-red a { color: #db1d2c !important; }
+  [data-ogsc] .l-grey a { color: #3d3c3c !important; }
+
+  /* Mobile styles */
+  @media only screen and (max-device-width: 480px), only screen and (max-width: 480px) {
+   .mpx-15 { padding-left: 15px !important; padding-right: 15px !important; }
+
+   .mpy-20 { padding-top: 20px !important; padding-bottom: 20px !important; }
+
+   .mpb-30 { padding-bottom: 30px !important; }
+
+   .mfz-34 { font-size: 34px !important; }
+
+   .mlh-38 { line-height: 38px !important; }
+
+   .mpb-24 { padding-bottom: 24px !important; }
+
+   .mpb-20 { padding-bottom: 20px !important; }
+
+   .mfz-20 { font-size: 20px !important; }
+
+   .mlh-24 { line-height: 24px !important; }
+
+   .mlh-26 { line-height: 26px !important; }
+
+   .mpt-30 { padding-top: 30px !important; }
+
+   .mfz-26 { font-size: 26px !important; }
+
+   .mlh-30 { line-height: 30px !important; }
+
+   .mpb-40 { padding-bottom: 40px !important; }
+
+   .mpy-30 { padding-top: 30px !important; padding-bottom: 30px !important; }
+
+   .td,
+   .m-shell { width: 100% !important; min-width: 100% !important; }
+
+   .mt-left { text-align: left !important; }
+   .mt-center { text-align: center !important; }
+   
+   .me-left { margin-right: auto !important; }
+   .me-center { margin: 0 auto !important; }
+
+   .mh-auto { height: auto !important; }
+   .mw-auto { width: auto !important; }
+
+   .fluid-img img { width: 100% !important; max-width: 100% !important; height: auto !important; }
+
+   .column,
+   .column-top,
+   .column-dir,
+   .column-dir-top { float: left !important; width: 100% !important; display: block !important; }
+
+   .m-hide { display: none !important; width: 0 !important; height: 0 !important; font-size: 0 !important; line-height: 0 !important; min-height: 0 !important; }
+   .m-block { display: block !important; }
+
+   .mw-15 { width: 15px !important; }
+
+   .mw-100p { width: 100% !important; }
+   .mw-60 { width: 60px !important; height: auto !important; }
+   .mw-60 img { width: 60px !important; height: auto !important; }
+
+   .mt-28 { margin-top: -28px !important; }
+   .mh-0 { height: auto !important; }
+   .mh-20 { height: 20px !important; }
+   .mh-54 { height: 54px !important; }
+   
+  }
+ </style>
+</head>
+<body class="body" style="padding:0 !important; margin:0 auto !important; display:block !important; min-width:100% !important; width:100% !important; background:#fffffe; -webkit-text-size-adjust:none;">
+ <center>
+  <table width="100%" border="0" cellspacing="0" cellpadding="0" style="margin: 0; padding: 0; width: 100%; height: 100%;" bgcolor="#fffffe" class="bg-white">
+   <tr>
+    <td style="margin: 0; padding: 0; width: 100%; height: 100%;" align="center" valign="top">
+     <table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <!-- Preview Text -->
+      <tr class="m-hide" style="mso-hide: all;">
+       <td style="font-size: 0pt; line-height: 0pt;">
+        <!--*|IF:MC_PREVIEW_TEXT|*-->
+        <!--[if !gte mso 9]><!-->
+        <span class="mcnPreviewText" style="display:none; font-size:0px; line-height:0px; max-height:0px; max-width:0px; opacity:0; overflow:hidden; visibility:hidden; mso-hide:all;"></span>
+        <!--<![endif]-->
+        <!--*|END:IF|*-->
+       </td>
+      </tr>
+      <tr class="m-hide" style="mso-hide: all;">
+       <td style="font-size: 0pt; line-height: 0pt;">&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;</td>
+      </tr>      <!-- END Preview Text -->
+     </table>
+     
+     <table width="640" border="0" cellspacing="0" cellpadding="0" class="m-shell">
+      <tr>
+       <td class="td" style="width:640px; min-width:640px; font-size:0pt; line-height:0pt; padding:0; margin:0; font-weight:normal;">
+<!-- HEADER START -->
+<table width="640" border="0" cellspacing="0" cellpadding="0" class="m-shell">
+<tr>
+<td class="td" style="width:640px; min-width:640px; font-size:0pt; line-height:0pt; padding:0; margin:0; font-weight:normal;">
+  
+  <!-- Personalization Ribbon Start -->
+    <center>
+    <!--[if (gte mso 9)|(IE)]>
+    <table width="640" style="width: 640px;" cellpadding="0" cellspacing="0" border="0" role="presentation">
+    <tr>
+    <td width="640" style="background-color:#0057A2; text-align: center;">
+    <![endif]-->
+<table width="100%" border="0" cellspacing="0" cellpadding="0" style="max-width: 640px; width: 100%;" align="center">
+    <tr>
+    <td class="fz-11 lh-15 l-white py-14 px-30 mpx-15 bg-blue" bgcolor="#0d4ca9" style="font-family:'Akzidenz Grotesk', 'Montserrat', Arial, sans-serif; min-width:auto !important; font-size: 11px; line-height: 15px; text-align:center; color:#fffffe; padding-top: 14px; padding-bottom: 14px; padding-left: 30px; padding-right: 30px;">
+    <p class="fz-11 lh-15 l-white" style="font-family:'Akzidenz Grotesk', 'Montserrat', Arial, sans-serif; min-width:auto !important; font-size: 11px; line-height: 15px; text-align:center; color:#fffffe;">
+      %%=v(@ribbon)=%% <br>
+    <a href="%%view_email_url%%" target="_blank" alias="view_in_browser_header" class="link l-white" style="text-decoration:none; color:#fffffe;"><span class="link l-white" style="text-decoration:none; color:#fffffe;"><strong>View in browser</strong></span></a>
+    </p>
+    </td>
+    </tr>
+  </table>
+  <!--[if (gte mso 9)|(IE)]>
+  </td>
+  </tr>
+  </table>
+  <![endif]-->
+</center>
+  <!-- Personalization Ribbon End --><!-- DYNAMIC HEADER 1 START -->%%[ IF NOT EMPTY(@points) AND @points != 0 THEN set @asterisk = "*Log in to your Account Dashboard to confirm the actual number of Entries you have to use to enter into a Sweepstakes. Recent activity may not be reflected in the Entries shown above and your actual Entries available may be different." set @disclaimer = "Unused Entries will expire after 12 months of no activity in your Account or 12 months following the date on which you completed an Activity, earned an Entry but did not use for a drawing (any unused Entries remaining in an Account after that time will be forfeited)." ]%%<center>
+ <!--[if (gte mso 9)|(IE)]->
+  <table cellpadding="0" cellspacing="0" border="0" width="640">
+  <tr>
+  <td width="640" height="151" style="">                
+  <v:rect xmlns:v="urn:schemas-microsoft-com:vml" fill="true" stroke="false" style="width:640px;height:151px;">
+  <v:fill type="frame" src="https://image.em.pepsico.com/lib/fe4515707564067f771671/m/3/6e7f0f29-d87c-45be-8243-006faaa587be.png" />
+  <v:textbox inset="0,0,0,0">               
+  <![endif]--><table background="https://image.em.pepsico.com/lib/fe4515707564067f771671/m/3/6e7f0f29-d87c-45be-8243-006faaa587be.png" border="0" cellpadding="0" cellspacing="0" role="presentation" style="max-width: 640px; width: 100%; text-align: center; background-size: cover;">
+  
+   <tr>
+    <td style="padding: 0; text-align: left">
+     <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="display: inline-block">
+      
+       <tr>
+        <td height="151" style="padding: 0; text-align: center; vertical-align: center;" width="201">
+         <a alias="logo_header" conversion="false" href="https://www.tastyrewards.com/en-us/" target="_blank" title=""><img alt="PepsiCo Tasty Rewards" height="103.27" src="https://image.em.pepsico.com/lib/fe4515707564067f771671/m/3/5711fd2b-69e0-400d-9489-b668ba2419af.png" style="width: 113.59px; height: 103.27px; padding: 0px; text-align: center;" width="113.59"> </a></td><td height="151" style="border-right: 0.5px solid #ffffff; opacity: 30%">
+        </td><td width="20">
+        </td><td class="font-fix l-white" style="font-family: 'GTWalsheim', 'Arimo', sans-serif, Helvetica,
+            Arial; font-size: 30px; font-weight: 700; color: #ffffff; mso-line-height-rule: exactly; line-height: 27.3px; text-align: left;" width="204">
+         Your Entries* Available</td><td width="5">
+        </td><td style="font-family: 'GTWalsheim', 'Arimo', sans-serif, Helvetica, Arial; font-size: 26px;
+            font-weight: 700; color: #ffffff; mso-line-height-rule: exactly; line-height: 27.3px; " width="149">
+         <!--[if (gte mso 9)|(IE)]->
+              <table cellpadding="0" cellspacing="0" border="0" role="presentation">
+              <tr>
+              <td style="vertical-align: center; background-color:#f8f8f8;">
+              <![endif]--><table border="0" cellpadding="0" cellspacing="0" role="presentation" style="background-color: #f8f8f8; border-radius: 8px 8px 8px 8px; background-size: cover;">
+          
+           <tr>
+            <td class="mb-cta-text mb-padding-x" style="color: #0057a2; font-size: 32px; font-weight: 700; padding: 20.3px 8.17px 25.3px 34px; border-radius: 8px 0 0 8px;">
+             <img height="28.59" src="https://image.em.pepsico.com/lib/fe4515707564067f771671/m/3/689f2f60-5e07-44cc-a09b-656ee5891379.png" width="28.59"></td><td class="mb-cta-text mb-padding-points" style="color: #0057a2; font-family: 'GTWalsheim', 'Arimo', sans-serif, Helvetica, Arial; font-size: 35px; font-weight: 700; padding: 20.3px 40px 25.3px 0; border-radius: 0 8px 8px 0; ">
+             %%=v(@points)=%%</td></tr></table><!--[if (gte mso 9)|(IE)]->
+              </td>
+              </tr>
+              </table>
+              <![endif]--></td></tr></table></td></tr></table><!--[if (gte mso 9)|(IE)]->
+  </v:textbox>
+  </v:rect>
+  </td>
+  </tr>
+  </table>
+  <![endif]--></center> %%[ ENDIF ]%% <!-- DYNAMIC HEADER 1 END --> <!-- DYNAMIC HEADER 2 START --> %%[ IF NOT EMPTY(@points) AND @points == 0 THEN set @asterisk = "*Log in to your Account Dashboard to confirm the actual number of Entries you have to use to enter into a Sweepstakes. Recent activity may not be reflected in the Entries shown above and your actual Entries available may be different." set @disclaimer = "Unused Entries will expire after 12 months of no activity in your Account or 12 months following the date on which you completed an Activity, earned an Entry but did not use for a drawing (any unused Entries remaining in an Account after that time will be forfeited)." ]%%<center>
+ <!--[if (gte mso 9)|(IE)]->
+  <table cellpadding="0" cellspacing="0" border="0" width="640">
+  <tr>
+  <td width="640" height="151" style="">                
+  <v:rect xmlns:v="urn:schemas-microsoft-com:vml" fill="true" stroke="false" style="width:640px;height:151px;">
+  <v:fill type="frame" src="https://image.em.pepsico.com/lib/fe4515707564067f771671/m/3/6e7f0f29-d87c-45be-8243-006faaa587be.png" />
+  <v:textbox inset="0,0,0,0">               
+  <![endif]--><table background="https://image.em.pepsico.com/lib/fe4515707564067f771671/m/3/6e7f0f29-d87c-45be-8243-006faaa587be.png" border="0" cellpadding="0" cellspacing="0" role="presentation" style="max-width: 640px; width: 100%; text-align: center; background-size: cover;">
+  
+   <tr>
+    <td style="padding: 0; text-align: left">
+     <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="display: inline-block">
+      
+       <tr>
+        <td height="151" style="padding: 0; text-align: center; vertical-align: center;" width="201">
+         <a alias="logo_header" conversion="false" href="https://www.tastyrewards.com/en-us/" target="_blank" title=""><img alt="PepsiCo Tasty Rewards" height="103.27" src="https://image.em.pepsico.com/lib/fe4515707564067f771671/m/3/5711fd2b-69e0-400d-9489-b668ba2419af.png" style="width: 113.59px; height: 103.27px; padding: 0px; text-align: center;" width="113.59"> </a></td><td height="151" style="border-right: 0.5px solid #ffffff; opacity: 30%">
+        </td><td width="20">
+        </td><td class="l-white a mb-cta-text" style="font-family: 'GTWalsheim', 'Arimo', sans-serif, Helvetica, Arial; font-size: 30px; font-weight: 700; color: #ffffff; mso-line-height-rule: exactly; line-height: 28px; text-align: center;" width="400">
+         Out of Entries?<br>
+         <a alias="header_link" class="l-white a" conversion="false" href="https://www.tastyrewards.com/en-us/" style="text-decoration: none; color: #ffffff !important;" target="_blank" title=""><span class="link l-white" style="text-decoration:none; color:#fffffe;">Earn more now! </span> </a></td><td width="5">
+        </td></tr></table></td></tr></table><!--[if (gte mso 9)|(IE)]->
+  </v:textbox>
+  </v:rect>
+  </td>
+  </tr>
+  </table>
+  <![endif]--></center> %%[ ENDIF ]%% <!-- DYNAMIC HEADER 2 END -->
+  <!-- MODULAR BRANDS HEADER START -->
+  %%[
+  SET @sub_loyalty = Brand_Affinity
+  IF @sub_loyalty != 'PTR' THEN
+   SET @brand_header_img = Lookup("PTR_Modular_Brands_Attributes", "Header Image URL", "Brand Short Name", @sub_loyalty)
+  SET @brand_header_link = Lookup("PTR_Modular_Brands_Attributes", "Header Link", "Brand Short Name", @sub_loyalty)
+  SET @brand_header_alt_text = Lookup("PTR_Modular_Brands_Attributes", "Header Alt Text", "Brand Short Name", @sub_loyalty)
+  ENDIF
+  ]%%
+  %%[IF @sub_loyalty != 'PTR' THEN]%%
+    <center>   
+ <table border="0" cellpadding="0" cellspacing="0" width="100%; max-width: 640px">
+  
+   <tr>
+    <td style="font-size:0pt; line-height:0pt; text-align:center;">
+     <a alias="Modular_Brands_Logo" href="%%=RedirectTo(@brand_header_link)=%%" target="_blank"><img alt="%%=v(@brand_header_alt_text)=%%" border="0" height="122" src="%%=RedirectTo(@brand_header_img)=%%" style="max-width:640px; width: 100%; height: auto; max-height: 122px" width="640"></a></td></tr></table></center>
+  %%[ENDIF]%%
+  <!-- MODULAR BRANDS HEADER END -->
+  <!-- DYNAMIC HEADER 3 START -->
+  %%[ IF EMPTY(@points) THEN ]%%
+  <center>   
+ <table border="0" cellpadding="0" cellspacing="0" width="100%">
+  
+   <tr>
+    <td class="py-15 px-30 mpy-20 mpx-15" style="font-size:0pt; line-height:0pt; text-align:center; padding-top: 15px; padding-bottom: 15px; padding-left: 30px; padding-right: 30px;">
+     <a alias="Header_Logo" href="https://www.tastyrewards.com/en-us/" target="_blank"><img alt="PepsiCo Tasty Rewards" border="0" height="140" src="https://image.em.pepsico.com/lib/fe4515707564067f771671/m/1/f91a7316-077b-41e1-a5eb-22937a89fabc.png" style="max-width:154px; width: 100%" width="154"></a></td></tr></table></center> %%[ ENDIF ]%% <!-- DYNAMIC HEADER 3 END --> 
+</td></tr></table>
+<!-- HEADER END -->
+
+        <!-- Your Sweepstakes -->
+        %%=BeginImpressionRegion("AID=265")=%%
+        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+         <tr>
+          <td class="px-30 mpx-15 pt-16 pb-56 mpb-30" style="padding-left: 30px; padding-right: 30px; padding-top: 16px; padding-bottom: 56px;">
+           <table width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+             <td class="title a-center fz-40 lh-54 mfz-34 mlh-38 c-blue l-blue pb-32 mpb-24" style="font-family:'Arimo', Arial, sans-serif; min-width:auto !important; text-align:center; font-size: 40px; line-height: 54px; color:#0e4caa; padding-bottom: 32px;">
+              <h1 class="title a-center fz-40 lh-54 mfz-34 mlh-38 c-blue l-blue no-p" style="font-family:'Arimo', Arial, sans-serif; min-width:auto !important; text-align:center; font-size: 40px; line-height: 54px; color:#0e4caa; padding:0 !important; margin:0 !important; mso-line-height-rule:exactly;"><strong>Your Sweepstakes</strong></h1>
+             </td>
+            </tr>
+            <tr>
+             <td class="pb-34 mpb-20" style="padding-bottom: 34px;">
+              <table width="100%" border="0" cellspacing="0" cellpadding="0">
+               <tr>
+                <th class="column-top" width="280" style="border: 1px solid #e5e5e5; border-radius: 12px; font-size:0pt; line-height:0pt; padding:0; margin:0; font-weight:normal; vertical-align:top;">
+                 <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                  <tr>
+                   <td class="fluid-img img-center" style="font-size:0pt; line-height:0pt; text-align:center;"><a href="https://www.tastyrewards.com/en-us/sweepstakes-contests" target="_blank" alias="Sweeps1_Img"><img src="https://image.em.pepsico.com/lib/fe4515707564067f771671/m/1/cfc484cf-6bd3-4d3c-9c57-80f420adc53d.png" class="br-12-12-0-0" width="280" height="281" border="0" alt="$7,500 Summer Days Giveaway" /></a></td>
+                  </tr>
+                  <tr>
+                   <td class="pt-18 pb-50 px-10 mpy-20 mpx-15" style="padding-top: 18px; padding-bottom: 50px; padding-left: 10px; padding-right: 10px;">
+                    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                     <tr>
+                      <td class="title fz-20 lh-24 a-center c-blue l-blue pb-10" style="font-family:'Arimo', Arial, sans-serif; min-width:auto !important; font-size: 20px; line-height: 24px; text-align:center; color:#0e4caa; padding-bottom: 10px;">
+                       <p class="title fz-20 lh-24 a-center c-blue l-blue no-p" style="font-family:'Arimo', Arial, sans-serif; min-width:auto !important; font-size: 20px; line-height: 24px; text-align:center; color:#0e4caa; padding:0 !important; margin:0 !important; mso-line-height-rule:exactly;"><strong>$7,500 Summer Days Giveaway</strong></p>
+                      </td>
+                     </tr>
+                     <tr>
+                      <td class="text fz-12 lh-14 a-center c-dark l-dark pb-14" style="font-family:'Montserrat', Arial, sans-serif; min-width:auto !important; font-size: 12px; line-height: 14px; text-align:center; color:#333333; padding-bottom: 14px;">
+                       <p class="text fz-12 lh-14 a-center c-dark l-dark no-p" style="font-family:'Montserrat', Arial, sans-serif; min-width:auto !important; font-size: 12px; line-height: 14px; text-align:center; color:#333333; padding:0 !important; margin:0 !important; mso-line-height-rule:exactly;">Make all your summertime dreams come true with a chance to WIN $7,500! Enter now to make this summer unforgettable.</p>
+                      </td>
+                     </tr>
+                    </table>
+                   </td>
+                  </tr>
+                 </table>
+                </th>
+                <th class="column mpb-20" width="16" style="font-size:0pt; line-height:0pt; padding:0; margin:0; font-weight:normal;">&nbsp;</th>
+                <th class="column-top" style="border: 1px solid #e5e5e5; border-radius: 12px; font-size:0pt; line-height:0pt; padding:0; margin:0; font-weight:normal; vertical-align:top;">
+                 <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                  <tr>
+                   <td class="fluid-img img-center" style="font-size:0pt; line-height:0pt; text-align:center;"><a href="https://www.tastyrewards.com/en-us/sweepstakes-contests" target="_blank" alias="Sweeps2_Img"><img src="https://image.em.pepsico.com/lib/fe4515707564067f771671/m/1/f2359b9d-8ae2-4f1f-a448-83a9ae2a177a.png" class="br-12-12-0-0" width="280" height="280" border="0" alt="Sunny Summer Gift Card Giveaway" /></a></td>
+                  </tr>
+                  <tr>
+                   <td class="pt-18 pb-50 px-10 mpy-20 mpx-15" style="padding-top: 18px; padding-bottom: 50px; padding-left: 10px; padding-right: 10px;">
+                    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                     <tr>
+                      <td class="title fz-20 lh-24 a-center c-blue l-blue pb-10" style="font-family:'Arimo', Arial, sans-serif; min-width:auto !important; font-size: 20px; line-height: 24px; text-align:center; color:#0e4caa; padding-bottom: 10px;">
+                       <p class="title fz-20 lh-24 a-center c-blue l-blue no-p" style="font-family:'Arimo', Arial, sans-serif; min-width:auto !important; font-size: 20px; line-height: 24px; text-align:center; color:#0e4caa; padding:0 !important; margin:0 !important; mso-line-height-rule:exactly;"><strong>Sunny Summer Gift Card Giveaway</strong></p>
+                      </td>
+                     </tr>
+                     <tr>
+                      <td class="text fz-12 lh-14 a-center c-dark l-dark pb-14" style="font-family:'Montserrat', Arial, sans-serif; min-width:auto !important; font-size: 12px; line-height: 14px; text-align:center; color:#333333; padding-bottom: 14px;">
+                       <p class="text fz-12 lh-14 a-center c-dark l-dark no-p" style="font-family:'Montserrat', Arial, sans-serif; min-width:auto !important; font-size: 12px; line-height: 14px; text-align:center; color:#333333; padding:0 !important; margin:0 !important; mso-line-height-rule:exactly;">Celebrate summer with a chance to WIN a $250 gift card to spend on snacks, hats, sunnies, or whatever you’d like!</p> 
+                      </td>
+                     </tr>
+                    </table>
+                   </td>
+                  </tr>
+                 </table>
+                </th>
+               </tr>
+              </table>
+             </td>
+            </tr>
+            <tr>
+             <td align="center">
+              <!-- Button -->
+              <table border="0" cellspacing="0" cellpadding="0">
+               <tr>
+                <td class="btn fz-24 lh-28 mfz-20 mlh-24 c-white l-white btnp-12-25 bg-red" style="border-radius: 5px; border-bottom: 5px solid #b81321; font-family:'Arimo', Arial, sans-serif; text-align:center; min-width:auto !important; font-size: 24px; line-height: 28px; color:#fffffe; mso-padding-alt:12px 25px;" bgcolor="#db1d2c"><p class="btn fz-24 lh-28 mfz-20 mlh-24 c-white l-white no-p" style="font-family:'Arimo', Arial, sans-serif; text-align:center; min-width:auto !important; font-size: 24px; line-height: 28px; color:#fffffe; padding:0 !important; margin:0 !important; mso-line-height-rule:exactly;"><a href="https://www.tastyrewards.com/en-us/sweepstakes-contests" target="_blank" alias="Sweeps_CTA" class="link c-white l-white " style="display: block; padding: 12px 25px; text-decoration:none; color:#fffffe;"><span class="link c-white l-white" style="text-decoration:none; color:#fffffe;"><strong>Check Out Sweepstakes</strong></span></a></p></td>
+               </tr>
+              </table>
+              <!-- END Button -->
+             </td>
+            </tr>
+           </table>
+          </td>
+         </tr>
+        </table>
+        %%=EndImpressionRegion(0)=%%
+        <!-- END Your Sweepstakes -->
+
+        <!-- Your Activities -->
+        %%=BeginImpressionRegion("AID=231")=%%
+        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+         <tr>
+          <td class="px-30 pb-42 mpx-15 mpb-30" style="padding-left: 30px; padding-right: 30px; padding-bottom: 42px;">
+           <table width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+             <td class="title fz-40 lh-44 mfz-34 mlh-38 a-center c-blue l-blue pb-36 mpb-20" style="font-family:'Arimo', Arial, sans-serif; min-width:auto !important; font-size: 40px; line-height: 44px; text-align:center; color:#0e4caa; padding-bottom: 36px;"><h1 class="title fz-40 lh-44 mfz-34 mlh-38 a-center c-blue l-blue no-p" style="font-family:'Arimo', Arial, sans-serif; min-width:auto !important; font-size: 40px; line-height: 44px; text-align:center; color:#0e4caa; padding:0 !important; margin:0 !important; mso-line-height-rule:exactly;"><strong>Your Activities</strong></h1></td>
+            </tr>
+            <tr>
+             <td class="pb-36 mpb-20" style="padding-bottom: 36px;">
+              <table width="100%" border="0" cellspacing="0" cellpadding="0">
+               <tr>
+                <th class="column-top" width="280" style="border: 1px solid #e5e5e5; border-radius: 12px; font-size:0pt; line-height:0pt; padding:0; margin:0; font-weight:normal; vertical-align:top;">
+                 <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                  <tr>
+                   <td class="fluid-img img-center" style="font-size:0pt; line-height:0pt; text-align:center;"><a href="https://tastyrewards.com/en-us/dashboard/#activity" target="_blank" alias="Activity1_Img"><img src="https://image.em.pepsico.com/lib/fe4515707564067f771671/m/1/3cd72e2c-062d-4dee-bbac-92547a38e23f.png" class="br-12-12-0-0" width="280" height="171" border="0" alt="Meet Your New Favorite Summer Sandwich" /></a></td>
+                  </tr>
+                  <tr>
+                   <td class="pt-12 pb-22 px-10 mpy-20 mpx-15" style="padding-top: 12px; padding-bottom: 22px; padding-left: 10px; padding-right: 10px;">
+                    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                     <tr>
+                      <td class="title fz-20 lh-24 a-center c-blue l-blue pb-10" style="font-family:'Arimo', Arial, sans-serif; min-width:auto !important; font-size: 20px; line-height: 24px; text-align:center; color:#0e4caa; padding-bottom: 10px;">
+                       <p class="title fz-20 lh-24 a-center c-blue l-blue no-p" style="font-family:'Arimo', Arial, sans-serif; min-width:auto !important; font-size: 20px; line-height: 24px; text-align:center; color:#0e4caa; padding:0 !important; margin:0 !important; mso-line-height-rule:exactly;"><strong>Meet Your New Favorite Summer Sandwich</strong></p>
+                      </td>
+                     </tr>
+                     <tr>
+                      <td class="text fz-12 lh-14 a-center c-dark l-dark" style="font-family:'Montserrat', Arial, sans-serif; min-width:auto !important; font-size: 12px; line-height: 14px; text-align:center; color:#333333;">
+                       <p class="text fz-12 lh-14 a-center c-dark l-dark no-p" style="font-family:'Montserrat', Arial, sans-serif; min-width:auto !important; font-size: 12px; line-height: 14px; text-align:center; color:#333333; padding:0 !important; margin:0 !important; mso-line-height-rule:exactly;">Make your BBQ game the best it’s ever been this summer with these super tasty sandwiches.</p>
+                      </td>
+                     </tr>
+                    </table>
+                   </td>
+                  </tr>
+                 </table>
+                </th>
+                <th class="column mpb-20" width="16" style="font-size:0pt; line-height:0pt; padding:0; margin:0; font-weight:normal;">&nbsp;</th>
+                <th class="column-top" style="border: 1px solid #e5e5e5; border-radius: 12px; font-size:0pt; line-height:0pt; padding:0; margin:0; font-weight:normal; vertical-align:top;">
+                 <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                  <tr>
+                   <td class="fluid-img img-center" style="font-size:0pt; line-height:0pt; text-align:center;"><a href="https://tastyrewards.com/en-us/dashboard/#activity" target="_blank" alias="Activity2_Img"><img src="https://image.em.pepsico.com/lib/fe4515707564067f771671/m/1/bffdbdf1-d4ba-45e6-a78e-587584e62f4e.png" class="br-12-12-0-0" width="280" height="171" border="0" alt="Easy Tips for a Self-Care Summer" /></a></td>
+                  </tr>
+                  <tr>
+                   <td class="pt-12 pb-22 px-10 mpy-20 mpx-15" style="padding-top: 12px; padding-bottom: 22px; padding-left: 10px; padding-right: 10px;">
+                    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                     <tr>
+                      <td class="title fz-20 lh-24 a-center c-blue l-blue pb-10" style="font-family:'Arimo', Arial, sans-serif; min-width:auto !important; font-size: 20px; line-height: 24px; text-align:center; color:#0e4caa; padding-bottom: 10px;">
+                       <p class="title fz-20 lh-24 a-center c-blue l-blue no-p" style="font-family:'Arimo', Arial, sans-serif; min-width:auto !important; font-size: 20px; line-height: 24px; text-align:center; color:#0e4caa; padding:0 !important; margin:0 !important; mso-line-height-rule:exactly;"><strong>Easy Tips for a Self-Care Summer</strong></p>
+                      </td>
+                     </tr>
+                     <tr>
+                      <td class="text fz-12 lh-14 a-center c-dark l-dark" style="font-family:'Montserrat', Arial, sans-serif; min-width:auto !important; font-size: 12px; line-height: 14px; text-align:center; color:#333333;">
+                       <p class="text fz-12 lh-14 a-center c-dark l-dark no-p" style="font-family:'Montserrat', Arial, sans-serif; min-width:auto !important; font-size: 12px; line-height: 14px; text-align:center; color:#333333; padding:0 !important; margin:0 !important; mso-line-height-rule:exactly;">Prioritize self-care this summer with these simple suggestions</p> 
+                      </td>
+                     </tr>
+                    </table>
+                   </td>
+                  </tr>
+                 </table>
+                </th>
+               </tr>
+              </table>
+             </td>
+            </tr>
+            <tr>
+             <td align="center">
+              <!-- Button -->
+              <table border="0" cellspacing="0" cellpadding="0">
+               <tr>
+                <td class="btn fz-24 lh-28 mfz-20 mlh-24 c-white l-white btnp-12-25 bg-red" style="border-radius: 5px; border-bottom: 5px solid #b81321; font-family:'Arimo', Arial, sans-serif; text-align:center; min-width:auto !important; font-size: 24px; line-height: 28px; color:#fffffe; mso-padding-alt:12px 25px;" bgcolor="#db1d2c"><p class="btn fz-24 lh-28 mfz-20 mlh-24 c-white l-white no-p" style="font-family:'Arimo', Arial, sans-serif; text-align:center; min-width:auto !important; font-size: 24px; line-height: 28px; color:#fffffe; padding:0 !important; margin:0 !important; mso-line-height-rule:exactly;"><a href="https://tastyrewards.com/en-us/dashboard/#activity" target="_blank" alias="Activity_CTA" class="link c-white l-white" style="display: block; padding: 12px 25px; text-decoration:none; color:#fffffe;"><span class="link c-white l-white" style="text-decoration:none; color:#fffffe;"><strong>Earn Entries</strong></span></a></p></td>
+               </tr>
+              </table>
+              <!-- END Button -->
+             </td>
+            </tr>
+           </table>
+          </td>
+         </tr>
+        </table>
+        %%=EndImpressionRegion(0)=%%
+        <!-- END Your Activities -->
+
+        <!-- Your Coupons -->
+        %%=BeginImpressionRegion("AID=509:1028:1001")=%%
+        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+         <tr>
+          <td class="px-16 pb-60 mpx-15 mpb-30" style="padding-left: 16px; padding-right: 16px; padding-bottom: 60px;">
+           <table width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+             <td class="title fz-40 lh-44 mfz-34 mlh-38 a-center c-blue l-blue pb-28 mpb-20" style="font-family:'Arimo', Arial, sans-serif; min-width:auto !important; font-size: 40px; line-height: 44px; text-align:center; color:#0e4caa; padding-bottom: 28px;"><h1 class="title fz-40 lh-44 mfz-34 mlh-38 a-center c-blue l-blue no-p" style="font-family:'Arimo', Arial, sans-serif; min-width:auto !important; font-size: 40px; line-height: 44px; text-align:center; color:#0e4caa; padding:0 !important; margin:0 !important; mso-line-height-rule:exactly;"><strong>Your Coupons</strong></h1></td>
+            </tr>
+            <tr>
+             <td class="pb-36 mpb-30" style="padding-bottom: 36px;">
+              <table width="100%" border="0" cellspacing="0" cellpadding="0">
+               <tr>
+                <th class="column-top" width="298" style="font-size:0pt; line-height:0pt; padding:0; margin:0; font-weight:normal; vertical-align:top;">
+                 <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                  <tr>
+                   <td class="fluid-img img-center" style="font-size:0pt; line-height:0pt; text-align:center;"><a href="https://www.tastyrewards.com/en-us/coupons" target="_blank" alias="Coupon1_Img"><img src="https://image.em.pepsico.com/lib/fe4515707564067f771671/m/1/1bed70b2-de1f-41c2-b41e-b70441be4118.png" width="298" height="327" border="0" alt="Your Coupons" /></a></td>
+                  </tr>
+                 </table>
+                </th>
+                <th class="column mpb-20" width="10" style="font-size:0pt; line-height:0pt; padding:0; margin:0; font-weight:normal;">&nbsp;</th>
+                <th class="column-top" style="font-size:0pt; line-height:0pt; padding:0; margin:0; font-weight:normal; vertical-align:top;">
+                 <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                  <tr>
+                   <td class="fluid-img img-center" style="font-size:0pt; line-height:0pt; text-align:center;"><a href="https://www.tastyrewards.com/en-us/coupons" target="_blank" alias="Coupon2_Img"><img src="https://image.em.pepsico.com/lib/fe4515707564067f771671/m/1/6485c3e3-0210-4fbf-8ebe-56da77a3d850.png" width="298" height="327" border="0" alt="Your Coupons" /></a></td>
+                  </tr>
+                 </table>
+                </th>
+               </tr>
+              </table>
+             </td>
+            </tr>
+            <tr>
+             <td align="center" class="pb-23" style="padding-bottom: 23px;">
+              <!-- Button -->
+              <table border="0" cellspacing="0" cellpadding="0">
+               <tr>
+                <td class="btn fz-24 lh-28 mfz-20 mlh-24 c-white l-white btnp-12-25 bg-red" style="border-radius: 5px; border-bottom: 5px solid #b81321; font-family:'Arimo', Arial, sans-serif; text-align:center; min-width:auto !important; font-size: 24px; line-height: 28px; color:#fffffe; mso-padding-alt:12px 25px;" bgcolor="#db1d2c"><p class="btn fz-24 lh-28 mfz-20 mlh-24 c-white l-white no-p" style="font-family:'Arimo', Arial, sans-serif; text-align:center; min-width:auto !important; font-size: 24px; line-height: 28px; color:#fffffe; padding:0 !important; margin:0 !important; mso-line-height-rule:exactly;"><a href="https://www.tastyrewards.com/en-us/coupons" target="_blank" alias="Coupon_CTA" class="link c-white l-white" style="display: block; padding: 12px 25px; text-decoration:none; color:#fffffe;"><span class="link c-white l-white" style="text-decoration:none; color:#fffffe;"><strong>Claim Coupon*</strong></span></a></p></td>
+               </tr>
+              </table>
+              <!-- END Button -->
+             </td>
+            </tr>
+            <tr>
+             <td class="text a-center c-dark l-dark fz-14 lh-18" style="font-family:'Montserrat', Arial, sans-serif; min-width:auto !important; text-align:center; color:#333333; font-size: 14px; line-height: 18px;">
+              <p class="text a-center c-dark l-dark fz-14 lh-18 no-p" style="font-family:'Montserrat', Arial, sans-serif; min-width:auto !important; text-align:center; color:#333333; font-size: 14px; line-height: 18px; padding:0 !important; margin:0 !important; mso-line-height-rule:exactly;">
+               *Coupons available while quantities last
+              </p>
+             </td>
+            </tr>
+           </table>
+          </td>
+         </tr>
+        </table>
+        %%=EndImpressionRegion(0)=%%
+        <!-- END Your Coupons -->
+
+        <!-- Full Image and Text -->
+        %%=BeginImpressionRegion("AID=509")=%%
+        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+         <tr>
+          <td class="fluid-img pb-44 mpb-20" style="font-size:0pt; line-height:0pt; text-align:left; padding-bottom: 44px;"><a href="http://www.kickitfortickets.com" target="_blank" alias="Banner1_Img"><img src="https://image.em.pepsico.com/lib/fe4515707564067f771671/m/1/731a8597-7a48-4b6e-9639-9ba6a6c558d1.png" width="640" height="370" border="0" alt="Kick It For Tickets with Lay’s®" /></a></td>
+         </tr>
+         <tr>
+          <td class="px-20 pb-48 mpx-15 mpb-30" style="padding-left: 20px; padding-right: 20px; padding-bottom: 48px;">
+           <table width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+             <td class="title a-center fz-40 lh-45 mfz-34 mlh-38 c-blue l-blue pb-20" style="font-family:'Arimo', Arial, sans-serif; min-width:auto !important; text-align:center; font-size: 40px; line-height: 45px; color:#0e4caa; padding-bottom: 20px;">
+              <h1 class="title a-center fz-40 lh-45 mfz-34 mlh-38 c-blue l-blue no-p" style="font-family:'Arimo', Arial, sans-serif; min-width:auto !important; text-align:center; font-size: 40px; line-height: 45px; color:#0e4caa; padding:0 !important; margin:0 !important; mso-line-height-rule:exactly;"><strong>Kick It For Tickets<span class="m-hide"><br /></span> With Lay’s<sup class="sup" style="font-size:0.6em; line-height:1;">&reg;</sup></strong></h1>
+             </td>
+            </tr>
+            <tr>
+             <td class="text a-center c-grey l-grey fz-24 lh-28 mfz-20 mlh-26 pb-30 mpb-20" style="font-family:'Montserrat', Arial, sans-serif; min-width:auto !important; text-align:center; color:#3d3c3c; font-size: 24px; line-height: 28px; padding-bottom: 30px;">
+              <p class="text a-center c-grey l-grey fz-24 lh-28 mfz-20 mlh-26 no-p" style="font-family:'Montserrat', Arial, sans-serif; min-width:auto !important; text-align:center; color:#3d3c3c; font-size: 24px; line-height: 28px; padding:0 !important; margin:0 !important; mso-line-height-rule:exactly;">
+               We’re giving away over 800 tickets to the Leagues Cup tournament! Enter for your chance to win.
+              </p>
+             </td>
+            </tr>
+            <tr>
+             <td align="center">
+              <!-- Button -->
+              <table border="0" cellspacing="0" cellpadding="0">
+               <tr>
+                <td class="btn fz-24 lh-28 mfz-20 mlh-24 c-white l-white btnp-12-25 bg-red mw-auto" style="border-radius: 5px; border-bottom: 5px solid #b81321; font-family:'Arimo', Arial, sans-serif; text-align:center; min-width:auto !important; font-size: 24px; line-height: 28px; color:#fffffe; mso-padding-alt:12px 25px;" bgcolor="#db1d2c" width="202"><p class="btn fz-24 lh-28 mfz-20 mlh-24 c-white l-white no-p" style="font-family:'Arimo', Arial, sans-serif; text-align:center; min-width:auto !important; font-size: 24px; line-height: 28px; color:#fffffe; padding:0 !important; margin:0 !important; mso-line-height-rule:exactly;"><a href="http://www.kickitfortickets.com" target="_blank" alias="Banner1_CTA" class="link c-white l-white" style="display: block; padding: 12px 25px; text-decoration:none; color:#fffffe;"><span class="link c-white l-white" style="text-decoration:none; color:#fffffe;"><strong>Play Now</strong></span></a></p></td>
+               </tr>
+              </table>
+              <!-- END Button -->
+             </td>
+            </tr>
+           </table>
+          </td>
+         </tr>
+        </table>
+        %%=EndImpressionRegion(0)=%%
+        <!-- END Full Image and Text -->
+
+        <!-- 2 Columns - L/Image - R/Text -->
+        %%=BeginImpressionRegion("AID=509:1001:307:500:504")=%%
+        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+         <tr>
+          <td class="pb-50 mpb-30" style="padding-bottom: 50px;">
+           <table width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+             <th class="column-top" width="320" style="font-size:0pt; line-height:0pt; padding:0; margin:0; font-weight:normal; vertical-align:top;">
+              <table width="100%" border="0" cellspacing="0" cellpadding="0">
+               <tr>
+                <td class="fluid-img" style="font-size:0pt; line-height:0pt; text-align:left;">
+                 <a href="https://www.amazon.com/stores/page/BCABF4E6-4AB6-4AA8-BBD7-EEB94A04DD39?maas=maas_adg_8C15A1979B8D29ACF167A99E1F7A7033_afap_abs&ref_=aa_maas&tag=maas" target="_blank" alias="Banner2_Img"><img src="https://image.em.pepsico.com/lib/fe4515707564067f771671/m/1/baed47cc-646f-431b-ac28-98d55a4b765b.png" width="320" height="370" border="0" alt="It’s Time To Go…Back To School!!" /></a>
+                </td>
+               </tr>
+              </table>
+             </th>
+             <th class="column" style="font-size:0pt; line-height:0pt; padding:0; margin:0; font-weight:normal;">
+              <table width="100%" border="0" cellspacing="0" cellpadding="0">
+               <tr>
+                <td class="px-30 mpx-15 mpt-30" style="padding-left: 30px; padding-right: 30px;">
+                 <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                  <tr>
+                   <td class="title a-center fz-30 lh-35 mfz-26 mlh-30 a-center c-blue l-blue pb-15" style="font-family:'Arimo', Arial, sans-serif; min-width:auto !important; font-size: 30px; line-height: 35px; text-align:center; color:#0e4caa; padding-bottom: 15px;">
+                    <h1 class="title a-center fz-30 lh-35 mfz-26 mlh-30 a-center c-blue l-blue no-p" style="font-family:'Arimo', Arial, sans-serif; min-width:auto !important; font-size: 30px; line-height: 35px; text-align:center; color:#0e4caa; padding:0 !important; margin:0 !important; mso-line-height-rule:exactly;"><strong>It’s Time To Go… Back To School!!</strong></h1>
+                   </td>
+                  </tr>
+                  <tr>
+                   <td class="text a-center c-grey l-grey fz-19 lh-22 a-center ltspn-0.4 pb-20" style="font-family:'Montserrat', Arial, sans-serif; min-width:auto !important; color:#3d3c3c; font-size: 19px; line-height: 22px; text-align:center; letter-spacing: -0.4px; padding-bottom: 20px;">
+                    <p class="text a-center c-grey l-grey fz-19 lh-22 a-center ltspn-0.4 no-p" style="font-family:'Montserrat', Arial, sans-serif; min-width:auto !important; color:#3d3c3c; font-size: 19px; line-height: 22px; text-align:center; letter-spacing: -0.4px; padding:0 !important; margin:0 !important; mso-line-height-rule:exactly;">
+                     Don’t forget to stock up on your favorite sips and chips this Back to School season. Visit your nearest grocery store or shop online for all the essentials to help make this the best (and tastiest!) Back to School season yet!
+                    </p>
+                   </td>
+                  </tr>
+                  <tr>
+                   <td align="center" align="center">
+                    <!-- Button -->
+                    <table border="0" cellspacing="0" cellpadding="0">
+                     <tr>
+                      <td class="btn fz-16 lh-20 c-white l-white btnp-10-30 bg-red" style="border-radius: 5px; border-bottom: 5px solid #b81321; font-family:'Arimo', Arial, sans-serif; text-align:center; min-width:auto !important; font-size: 16px; line-height: 20px; color:#fffffe; mso-padding-alt:10px 30px;" bgcolor="#db1d2c"><p class="btn fz-16 lh-20 c-white l-white no-p" style="font-family:'Arimo', Arial, sans-serif; text-align:center; min-width:auto !important; font-size: 16px; line-height: 20px; color:#fffffe; padding:0 !important; margin:0 !important; mso-line-height-rule:exactly;"><a href="https://www.amazon.com/stores/page/BCABF4E6-4AB6-4AA8-BBD7-EEB94A04DD39?maas=maas_adg_8C15A1979B8D29ACF167A99E1F7A7033_afap_abs&ref_=aa_maas&tag=maas" target="_blank" alias="Banner2_CTA" class="link c-white l-white" style="display: block; padding: 10px 30px; text-decoration:none; color:#fffffe;"><span class="link c-white l-white" style="text-decoration:none; color:#fffffe;"><strong>Shop Now</strong></span></a></p></td>
+                     </tr>
+                    </table>
+                    <!-- END Button -->
+                   </td>
+                  </tr>
+                 </table>
+                </td>
+               </tr>
+              </table>
+             </th>
+            </tr>
+           </table>
+          </td>
+         </tr>
+        </table>
+        %%=EndImpressionRegion(0)=%%
+        <!-- END 2 Columns - L/Image - R/Text -->
+
+        <!-- 2 Columns - L/Image - R/Text -->
+        %%=BeginImpressionRegion("AID=315")=%%
+        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+         <tr>
+          <td class="pb-50 mpb-30" style="padding-bottom: 50px;">
+           
+                
+            <table width="100%" border="0" cellspacing="0" cellpadding="0" dir="rtl" style="direction: rtl;">
+            <tr>
+                <th class="column-dir-top" dir="ltr" width="320" style="font-size:0pt; line-height:0pt; padding:0; margin:0; font-weight:normal; direction:ltr; vertical-align:top;">
+              <table width="100%" border="0" cellspacing="0" cellpadding="0">
+               <tr>
+                <td class="fluid-img" style="font-size:0pt; line-height:0pt; text-align:left;">
+                 <a href="http://www.mtndewgaming.com/" target="_blank" alias="Banner4_Img"><img src="https://image.em.pepsico.com/lib/fe4515707564067f771671/m/1/a1320b51-597c-48b0-8a14-35a44c5c94a1.png" width="320" height="370" border="0" alt="Mtn Dew Partners With Borderlands Movie for Epic Rewards" /></a>
+                </td>
+               </tr>
+              </table>
+             </th>
+             <th class="column-dir" dir="ltr" style="font-size:0pt; line-height:0pt; padding:0; margin:0; font-weight:normal; direction:ltr;">
+              <table width="100%" border="0" cellspacing="0" cellpadding="0">
+               <tr>
+                <td class="px-20 mpx-15 mpt-30" style="padding-left: 20px; padding-right: 20px;">
+                 <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                  <tr>
+                   <td class="title a-center fz-30 lh-35 mfz-26 mlh-30 a-center c-blue l-blue pb-15" style="font-family:'Arimo', Arial, sans-serif; min-width:auto !important; font-size: 30px; line-height: 35px; text-align:center; color:#0e4caa; padding-bottom: 15px;">
+                    <h1 class="title a-center fz-30 lh-35 mfz-26 mlh-30 a-center c-blue l-blue no-p" style="font-family:'Arimo', Arial, sans-serif; min-width:auto !important; font-size: 30px; line-height: 35px; text-align:center; color:#0e4caa; padding:0 !important; margin:0 !important; mso-line-height-rule:exactly;"><strong>Mtn Dew Partners With Borderlands Movie For Epic Rewards</strong></h1>
+                   </td>
+                  </tr>
+                  <tr>
+                   <td class="text a-center c-grey l-grey fz-19 lh-22 a-center ltspn-0.6 pb-20" style="font-family:'Montserrat', Arial, sans-serif; min-width:auto !important; color:#3d3c3c; font-size: 19px; line-height: 22px; text-align:center; letter-spacing: -0.6px; padding-bottom: 20px;">
+                    <p class="text a-center c-grey l-grey fz-19 lh-22 a-center ltspn-0.6 no-p" style="font-family:'Montserrat', Arial, sans-serif; min-width:auto !important; color:#3d3c3c; font-size: 19px; line-height: 22px; text-align:center; letter-spacing: -0.6px; padding:0 !important; margin:0 !important; mso-line-height-rule:exactly;">
+                     Mtn Dew is celebrating the upcoming release of Borderlands the movie by adding tons of Borderlands-inspired rewards to the Mtn Dew Gaming Rewards marketplace. Buy Dew, enter codes, get rewarded!
+                    </p>
+                   </td>
+                  </tr>
+                  <tr>
+                   <td align="center" align="center">
+                    <!-- Button -->
+                    <table border="0" cellspacing="0" cellpadding="0">
+                     <tr>
+                      <td class="btn fz-16 lh-20 c-white l-white btnp-10-30 bg-red" style="border-radius: 5px; border-bottom: 5px solid #b81321; font-family:'Arimo', Arial, sans-serif; text-align:center; min-width:auto !important; font-size: 16px; line-height: 20px; color:#fffffe; mso-padding-alt:10px 30px;" bgcolor="#db1d2c"><p class="btn fz-16 lh-20 c-white l-white no-p" style="font-family:'Arimo', Arial, sans-serif; text-align:center; min-width:auto !important; font-size: 16px; line-height: 20px; color:#fffffe; padding:0 !important; margin:0 !important; mso-line-height-rule:exactly;"><a href="http://www.mtndewgaming.com/" target="_blank" alias="Banner4_CTA" class="link c-white l-white" style="display: block; padding: 10px 30px; text-decoration:none; color:#fffffe;"><span class="link c-white l-white" style="text-decoration:none; color:#fffffe;"><strong>See The Rewards!</strong></span></a></p></td>
+                     </tr>
+                    </table>
+                    <!-- END Button -->
+                   </td>
+                  </tr>
+                 </table>
+                </td>
+               </tr>
+              </table>
+             </th>
+            </tr>
+           </table>
+          </td>
+         </tr>
+        </table>
+        %%=EndImpressionRegion(0)=%%
+        <!-- END 2 Columns - L/Image - R/Text -->
+
+        <!-- 2 Columns - R/Image - L/Text -->
+        %%=BeginImpressionRegion("AID=506")=%%
+        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+         <tr>
+          <td class="pb-62 mpb-40" style="padding-bottom: 62px;">
+           <table width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+             <td>
+                <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                    <tr>
+                     <th class="column" width="320" style="font-size:0pt; line-height:0pt; padding:0; margin:0; font-weight:normal;">
+                 <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                  <tr>
+                   <td class="fluid-img" style="font-size:0pt; line-height:0pt; text-align:left;">
+                    <a href="https://www.instagram.com/officialfritos/?hl=en" target="_blank" alias="Banner5_Img"><img src="https://image.em.pepsico.com/lib/fe4515707564067f771671/m/1/c9096fb7-6b03-4c27-9643-7fd08874065c.png" width="320" height="370" border="0" alt="Chase Down This Limited-Edition Flavor Before It’s Gone" /></a>
+                   </td>
+                  </tr>
+                 </table>
+                </th>
+                <th class="column" style="font-size:0pt; line-height:0pt; padding:0; margin:0; font-weight:normal;">
+                 <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                  <tr>
+                   <td class="px-30 mpx-15 mpt-30" style="padding-left: 30px; padding-right: 30px;">
+                    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                     <tr>
+                      <td class="title a-center fz-30 lh-35 mfz-26 mlh-30 a-center c-blue l-blue pb-15" style="font-family:'Arimo', Arial, sans-serif; min-width:auto !important; font-size: 30px; line-height: 35px; text-align:center; color:#0e4caa; padding-bottom: 15px;">
+                       <h1 class="title a-center fz-30 lh-35 mfz-26 mlh-30 a-center c-blue l-blue no-p" style="font-family:'Arimo', Arial, sans-serif; min-width:auto !important; font-size: 30px; line-height: 35px; text-align:center; color:#0e4caa; padding:0 !important; margin:0 !important; mso-line-height-rule:exactly;"><strong>Chase Down This Limited-Edition Flavor Before It’s Gone</strong></h1>
+                      </td>
+                     </tr>
+                     <tr>
+                      <td class="text a-center c-grey l-grey fz-19 lh-22 a-center ltspn-0.4 pb-20" style="font-family:'Montserrat', Arial, sans-serif; min-width:auto !important; color:#3d3c3c; font-size: 19px; line-height: 22px; text-align:center; letter-spacing: -0.4px; padding-bottom: 20px;">
+                       <p class="text a-center c-grey l-grey fz-19 lh-22 a-center ltspn-0.4 no-p" style="font-family:'Montserrat', Arial, sans-serif; min-width:auto !important; color:#3d3c3c; font-size: 19px; line-height: 22px; text-align:center; letter-spacing: -0.4px; padding:0 !important; margin:0 !important; mso-line-height-rule:exactly;">
+                        Head over to our Instagram to learn more.​
+                       </p>
+                      </td>
+                     </tr>
+                     <tr>
+                      <td align="center" align="center">
+                       <!-- Button -->
+                       <table border="0" cellspacing="0" cellpadding="0">
+                        <tr>
+                         <td class="btn fz-16 lh-20 c-white l-white btnp-10-30 bg-red" style="border-radius: 5px; border-bottom: 5px solid #b81321; font-family:'Arimo', Arial, sans-serif; text-align:center; min-width:auto !important; font-size: 16px; line-height: 20px; color:#fffffe; mso-padding-alt:10px 30px;" bgcolor="#db1d2c"><p class="btn fz-16 lh-20 c-white l-white no-p" style="font-family:'Arimo', Arial, sans-serif; text-align:center; min-width:auto !important; font-size: 16px; line-height: 20px; color:#fffffe; padding:0 !important; margin:0 !important; mso-line-height-rule:exactly;"><a href="https://www.instagram.com/officialfritos/?hl=en" target="_blank" alias="Banner5_CTA" class="link c-white l-white" style="display: block; padding: 10px 30px; text-decoration:none; color:#fffffe;"><span class="link c-white l-white" style="text-decoration:none; color:#fffffe;"><strong>Learn More</strong></span></a></p></td>
+                        </tr>
+                       </table>
+                       <!-- END Button -->
+                      </td>
+                     </tr>
+                    </table>
+                   </td>
+                  </tr>
+                 </table>
+                </th>
+               </tr>
+              </table>
+             </td>
+            </tr>
+           </table>
+          </td>
+         </tr>
+        </table>
+        %%=EndImpressionRegion(0)=%%
+        <!-- END 2 Columns - R/Image - L/Text -->
+
+        <!-- Footer -->
+        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+         <tr>
+          <td class="py-60 px-32 mpy-30 mpx-15 bg-blue" bgcolor="#0d4ca9" style="padding-top: 60px; padding-bottom: 60px; padding-left: 32px; padding-right: 32px;">
+           <table width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+             <td class="img-center pb-34 mpb-30" style="font-size:0pt; line-height:0pt; text-align:center; padding-bottom: 34px;"><a href="https://www.tastyrewards.com/en-us/" target="_blank" alias="Footer_Logo"><img src="https://image.em.pepsico.com/lib/fe4515707564067f771671/m/1/bf7685b8-48c0-435c-8a3f-bdad76ab1c4c.png" width="136" height="124" border="0" alt="PepsiCo Tasty Rewards" /></a></td>
+            </tr>
+            <tr>
+             <td class="text fz-10 lh-18 c-white l-white a-center" style="font-family:'Montserrat', Arial, sans-serif; min-width:auto !important; font-size: 10px; line-height: 18px; color:#fffffe; text-align:center;">
+              <p class="text fz-10 lh-18 c-white l-white a-center no-p" style="font-family:'Montserrat', Arial, sans-serif; min-width:auto !important; font-size: 10px; line-height: 18px; color:#fffffe; text-align:center; padding:0 !important; margin:0 !important; mso-line-height-rule:exactly;">
+                %%[IF NOT EMPTY(@points) THEN]%% %%=v(@asterisk)=%% <br/><br/> %%[ENDIF]%%
+               <strong class="fw-700" style="font-weight: 700;">$7,500 Summer Days Giveaway:</strong> NO PURCHASE NECESSARY. Open to 50 US/DC, 18+ (19+ AL &amp; NE) and are a Tasty Rewards Member. Begins J&zwnj;u&zwnj;l&zwnj;y 8, 2&zwnj;0&zwnj;2&zwnj;4 Ends A&zwnj;u&zwnj;g&zwnj;u&zwnj;s&zwnj;t 4, 2&zwnj;0&zwnj;2&zwnj;4. Void where prohibited. Visit <a href="https://www.tastyrewards.com/en-us/tastyrewardspromotion/officialrules" target="_blank" alias="Footer_Legal_OfficialRules_1" class="link-u c-white l-white" style="text-decoration:underline; color:#fffffe;"><span class="link-u c-white l-white" style="text-decoration:underline; color:#fffffe;">https://www.tastyrewards.com/en-us/tastyrewardspromotion/officialrules</span></a> for <a href="https://www.tastyrewards.com/en-us/tastyrewardspromotion/officialrules" target="_blank" alias="Footer_Legal_OfficialRules_2" class="link-u c-white l-white" style="text-decoration:underline; color:#fffffe;"><span class="link-u c-white l-white" style="text-decoration:underline; color:#fffffe;">Official Rules</span></a>. Sponsor: Frito-Lay, Inc. 7701 Legacy Drive, Plano, Texas 75024-4099. 
+               <br /><br />
+
+               <strong class="fw-700" style="font-weight: 700;">Sunny Summer Gift Card Giveaway:</strong> NO PURCHASE NECESSARY. Open to 50 US/DC, 18+ (19+ AL &amp; NE) and are a Tasty Rewards Member. Begins J&zwnj;u&zwnj;l&zwnj;y 8, 2&zwnj;0&zwnj;2&zwnj;4 Ends A&zwnj;u&zwnj;g&zwnj;u&zwnj;s&zwnj;t 4, 2&zwnj;0&zwnj;2&zwnj;4. Void where prohibited. Visit <a href="https://www.tastyrewards.com/en-us/tastyrewardspromotion/officialrules" alias="Footer_Legal_OfficialRules_3" target="_blank" class="link-u c-white l-white" style="text-decoration:underline; color:#fffffe;"><span class="link-u c-white l-white" style="text-decoration:underline; color:#fffffe;">https://www.tastyrewards.com/en-us/tastyrewardspromotion/officialrules</span></a> for <a href="https://www.tastyrewards.com/en-us/tastyrewardspromotion/officialrules" alias="Footer_Legal_OfficialRules_4" target="_blank" class="link-u c-white l-white" style="text-decoration:underline; color:#fffffe;"><span class="link-u c-white l-white" style="text-decoration:underline; color:#fffffe;">Official Rules</span></a>. Sponsor: Frito-Lay, Inc. 7701 Legacy Drive, Plano, Texas 75024-4099. 
+               <br /><br />
+
+               <strong class="fw-700" style="font-weight: 700;">Leagues Cup Kick it For Tickets Promotion:</strong> NO PURCHASE OR PAYMENT NECESSARY TO ENTER OR WIN. A PURCHASE WILL NOT INCREASE YOUR CHANCES OF WINNING. Open only to legal residents of fifty (50) U.S. and D.C., who are eighteen (18) years of age or older and at least the age of majority in their jurisdiction of residence (19 in AL and NE) at the time of entry. Promotion begins at 1&zwnj;2&zwnj;:&zwnj;0&zwnj;0 p&zwnj;.&zwnj;m&zwnj;. E&zwnj;T on J&zwnj;u&zwnj;l&zwnj;y 1, 2&zwnj;0&zwnj;2&zwnj;4, and ends at 1&zwnj;2&zwnj;:&zwnj;0&zwnj;0 p&zwnj;.&zwnj;m. ET on A&zwnj;u&zwnj;g&zwnj;u&zwnj;s&zwnj;t 1&zwnj;9, 2024. There is a limit of one (1) Game Play and one (1) Sweepstakes Entry per day, per person. For full details on how to enter, prize details and full Official Rules, click here. SPONSOR: Frito-Lay, Inc. 7701 Legacy Drive, Plano, Texas 75024. All snack and beverage brands are registered trademarks of PepsiCo, Inc. or its affiliates. &copy; 2024. &copy; 2024 Leagues Cup<sup class="sup" style="font-size:0.6em; line-height:1;">&trade;</sup>
+               <br /><br />
+
+               We sent this email to: <a href="mailto:%%emailaddr%%" target="_blank" alias="email_address" style="cursor: auto; text-decoration:none; color:#fffffe;" class="link c-white l-white"><span class="link c-white l-white" style="text-decoration:none; color:#fffffe;">%%emailaddr%%</span></a> since you are registered as a member of our PepsiCo Tasty <span class="m-hide"><br /></span>Rewards program. You may unsubscribe at any time by clicking the link below.
+               <br /><br />
+
+               <a href="%%profile_center_url%%" target="_blank" alias="Preference_center" class="link c-white l-white" style="text-decoration:none; color:#fffffe;"><span class="link c-white l-white" style="text-decoration:none; color:#fffffe;">Manage&nbsp;Preferences</span></a>
+               &nbsp;&nbsp;|&nbsp;&nbsp;<a href="%%unsub_center_url%%" target="_blank" alias="Unsubscribe_footer" class="link c-white l-white" style="text-decoration:none; color:#fffffe;"><span class="link c-white l-white" style="text-decoration:none; color:#fffffe;">Unsubscribe</span></a>
+               &nbsp;&nbsp;|&nbsp;&nbsp;<a href="https://contact.pepsico.com/pepsico/privacy-policy" target="_blank" alias="Privacy_footer" class="link c-white l-white" style="text-decoration:none; color:#fffffe;"><span class="link c-white l-white" style="text-decoration:none; color:#fffffe;">Privacy&nbsp;Policy</span></a> 
+               &nbsp;&nbsp;|&nbsp;&nbsp;<a href="https://contact.pepsico.com/pepsico/terms-conditions" target="_blank" alias="Terms_footer" class="link c-white l-white" style="text-decoration:none; color:#fffffe;"><span class="link c-white l-white" style="text-decoration:none; color:#fffffe;">Terms&nbsp;of&nbsp;Use</span></a> 
+               &nbsp;&nbsp;|&nbsp;&nbsp;<a href="https://contact.pepsico.com/tastyrewardsus" target="_blank" alias="Contact_footer" class="link c-white l-white" style="text-decoration:none; color:#fffffe;"><span class="link c-white l-white" style="text-decoration:none; color:#fffffe;">Contact&nbsp;Us</span></a>
+               &nbsp;&nbsp;|&nbsp;&nbsp;<a href="%%view_email_url%%" target="_blank" alias="Browser_footer" class="link c-white l-white" style="text-decoration:none; color:#fffffe;"><span class="link c-white l-white" style="text-decoration:none; color:#fffffe;">View&nbsp;in&nbsp;browser</span></a>
+               <br /><br />
+
+               &copy; %%xtyear%% Pep&zwj;siCo, In&zwj;c. 70&zwj;0 Ander&zwj;son Hi&zwj;ll R&zwj;d, Purc&zwj;hase, N&zwj;Y 10&zwj;577 |  <a href="tel:+18332282789" target="_blank" alias="zip_code" class="link c-white l-white" style="text-decoration:none; color:#fffffe;"><span class="link c-white l-white" style="text-decoration:none; color:#fffffe;">833-228-2789</span></a>
+               <br /><br />
+
+               &copy;BUBLY, the Bubly Designs, and the Bubly Marks are trademarks of Portfolio Concentrate Solutions UC.
+               <br /><br />
+
+               <a href="https://www.tastyrewards.com/en-us/" target="_blank" alias="tastyrewards_footer_end" class="link c-white l-white" style="text-decoration:none; color:#fffffe;"><span class="link c-white l-white" style="text-decoration:none; color:#fffffe;">www.tastyrewards.com/en-us</span></a>
+               <br /><br />
+
+               All trademarks and logos are property of their respective owners.
+                %%[IF NOT EMPTY(@points) THEN]%% <br/><br/> %%=v(@disclaimer)=%% %%[ENDIF]%%
+              </p>
+             </td>
+            </tr>
+           </table>
+          </td>
+         </tr>
+        </table>
+        <!-- END Footer -->
+
+        <custom name="opencounter" type="tracking" />
+        <custom name="usermatch" type="tracking" />
+       </td>
+      </tr>
+     </table>
+    </td>
+   </tr>
+  </table>
+ </center>
+</body>
+</html>

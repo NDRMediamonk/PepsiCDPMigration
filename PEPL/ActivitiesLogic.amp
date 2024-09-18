@@ -1,0 +1,66 @@
+
+<script runat="server">
+    Platform.Load("core", "1.1.1");
+
+ // Retrieve the AMPscript variable'
+ var emailAddress = Platform.Recipient.GetAttributeValue('emailAddress');
+  var jsonString = Platform.Recipient.GetAttributeValue('LoyaltyProgramMember');
+    // Step 1: Parse the JSON data
+    var data = Platform.Function.ParseJSON(jsonString);
+
+    // Step 2: Extract the Activity_Id values
+    var activityIds = [];
+    var activities = data[0].Loyalty_Activities_Available; //Points_Balance
+    var pointsBalance = data[0].Points_Balance;
+     Platform.Variable.SetValue("@points",pointsBalance);
+    for (var i = 0; i < activities.length; i++) {
+        activityIds.push(activities[i].Activity_Id);
+    }
+    var matchingRecords = [];
+    var deName = "ent.PEPL_Activity_Lookup";
+    for (var j = 0; j < activityIds.length; j++) {
+        var rows = Platform.Function.LookupRows(deName, "Campaign_Id", activityIds[j]);
+        if (rows.length > 0) {
+            matchingRecords = matchingRecords.concat(rows);
+        }
+    }
+     var activityLookuptwoRec = [];
+     var matchingaAtivityCount = matchingRecords.length;
+     Platform.Variable.SetValue("@matchingaAtivityCount", matchingaAtivityCount);
+    var activityCount = activityIds.length;
+     Platform.Variable.SetValue("@activitiesIds", activityIds);
+     Platform.Variable.SetValue("@activityCount", activityCount);
+</script>
+
+%%[
+
+  FOR @i = 1 TO @activityCount DO
+   SET @ID = Row(@activitiesIds, @i)
+   set @eligibleBrands = Lookup("ent.PEPL_Activity_Lookup","Brand","Campaign_Id",@ID)
+   set @activityStart = Lookup("ent.PEPL_Activity_Lookup","Active_Start_Date","Campaign_Id",@ID)
+                    set @activityEnd = Lookup("ent.PEPL_Activity_Lookup","Active_End_Date","Campaign_Id",@ID)
+                    set @Priority = Lookup("ent.PEPL_Activity_Lookup","Priority","Campaign_Id",@ID)
+                    set @imageURL = Lookup("ent.PEPL_Activity_Lookup","English_Image","Campaign_Id",@ID)
+                    set @title = Lookup("ent.PEPL_Activity_Lookup","English_Title","Campaign_Id",@ID)
+                   
+   ]%%
+
+   matchingaAtivityCount ==== %%=v(@matchingaAtivityCount)=%% <br>
+    activityCount ==== %%=v(@activityCount)=%% <br>
+   %%[
+    NEXT @i
+]%%
+
+
+<script runat="server" language="JavaScript">
+  
+  var jsonString = Platform.Recipient.GetAttributeValue('LoyaltyProgramMember');
+  var jsonData = Platform.Function.ParseJSON(jsonString);
+  if (jsonData !== null) {
+    var row = jsonData[0];
+    var points = row.Points_Balance;
+    // include here the Incomplete Activities pull when the data is ready
+  }
+  Platform.Variable.SetValue("@points", points);
+    // include here the Incomplete Activities SetValue when the data is ready
+</script>
