@@ -16,8 +16,7 @@
         SET @isFuture = "False"
    ENDIF
   IF EMPTY (@LoyaltyProgramMember) OR EMPTY (@incompleteActivities) OR EMPTY (@accountDate) OR  (@isFuture=="True") THEN
-  RaiseError("LoyaltyProgramMember Json or incompleteactivities or accountDate are empty: " 
-  , @accountDate)
+  RaiseError("LoyaltyProgramMember Json or incompleteactivities or accountDate are empty: " , TRUE)
   ENDIF
   ]%% -->
   <script runat="server" language="JavaScript">

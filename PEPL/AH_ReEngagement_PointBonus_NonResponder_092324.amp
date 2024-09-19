@@ -1,21 +1,5 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
-    <script runat="server" language="JavaScript">
-  Platform.Load('Core','1');
-  var emailAddress = Platform.Recipient.GetAttributeValue('emailAddress');
-  var payloadString = Platform.Function.Lookup('ent.PTR - Re-engagement Journey AH Bonus - EN_PTR - Re-engagem_1sg8Y000000TNHDQA4_85R8Y000000GmjGUAS_I','LoyaltyProgramMember','emailAddress',emailAddress);
-  Platform.Variable.SetValue("@jsonString", payloadString);
-  var payload = Platform.Function.ParseJSON(payloadString);
-  if (payload !== null) {
-    var row = payload[0];
-    // Pass @row from SSJS to AMPscript:
-    Platform.Variable.SetValue("@row", Stringify(row));
-
-    var points = row.Points_Balance;
-    // Pass @points from SSJS to AMPscript:
-    Platform.Variable.SetValue("@points", points);
-  }
-</script>
 <head>
     <div style="display: none">
         %%[
@@ -27,22 +11,81 @@
             set @ribbon = concat(ProperCase(@firstName), ', you don’t want to miss this. ')
         ENDIF
         
-         set @sub_loyalty = [Brand_Affinity]  
-         set @PTR_Status = [PTR_Status]      
-  /* Active Loyalty */
+
+        set @sub_loyalty = Lookup("PTR - Re-Engagement Journey - Felipe - email development", "dashboard_affinity", "emailAddress", emailAddress)
+        /* Active Loyalty */
   IF @sub_loyalty != "PTR" THEN
   set @brand_header_img = Lookup("PTR_Modular_Brands_Attributes", "Header Image URL", "Brand Short Name", @sub_loyalty)
   set @brand_header_link = Lookup("PTR_Modular_Brands_Attributes", "Header Link", "Brand Short Name", @sub_loyalty)
   set @brand_header_alt_text = Lookup("PTR_Modular_Brands_Attributes", "Header Alt Text", "Brand Short Name", @sub_loyalty)
   ENDIF
-   if @PTR_Status == 'Subscriber' then
-    set @points = ''
-    ENDIF 
-    if @PTR_Status == 'Account Holder' AND Empty (@jsonString) then
-    RaiseError("LoyaltyProgramMember Json is empty", true)
-    ENDIF
+
+
+         
+  /* Find the position in the JSON for activities, date created and points balance */
+    set @json = Lookup("PTR - Re-Engagement Journey - Felipe - email development", "Loyalty_Program_Member", "emailAddress", emailAddress)
+
+  /*---build a simple string from JSON data---*/ 
+      SET @string = Replace(@json, "{", "") 
+      SET @string = Replace(@string, "}", "") 
+      SET @string = Replace(@string, " ", "") 
+      SET @string = Replace(@string, "[", "") 
+      SET @string = Replace(@string, "]", "") 
+      SET @string = Replace(@string, '"', '')
+      SET @string = Replace(@string, ':', ',')
+    
+  /*---build a rowset---*/ 
+      SET @JSONrows = BuildRowsetFromString(@string,",")
+      SET @JSONrowCount = RowCount(@JSONrows)
+
+  /*---declare the strings for JSON fields position in the rowset, will be used in the for-if loops---*/ 
+      set @activityrownumber = ""
+      set @PointsBalancenumber = ""
+      set @DateCreatednumber = ""
+
+  /*---For loop---*/ 
+  IF @JSONrowCount > 0 THEN
+    FOR @i = 1 TO @JSONrowCount DO
+        SET @row = Row(@JSONrows, @i) 
+        /* get row based on counter */
+        SET @JSONvalue = Field(@row,1)
+
+        /*---JSON activity_id positions---*/
+        if @JSONvalue == "activity_id" then
+            if @activityrownumber == "" then
+            set @activityrownumber = Add(@i,1)
+            else 
+            set @activityrownumber = concat(@activityrownumber,",",Add(@i,1))
+            endif
+        endif
+
+        /*---JSON Points_Balance positions---*/
+        if @JSONvalue == "Points_Balance" then
+            if @PointsBalancenumber == "" then
+            set @PointsBalancenumber = Add(@i,1)
+            else 
+            set @PointsBalancenumber = concat(@PointsBalancenumber,",",Add(@i,1))
+            endif
+        endif
+
+        /*---JSON Date_Created positions---*/
+        if @JSONvalue == "Date_Created" then
+            if @DateCreatednumber == "" then
+            set @DateCreatednumber = Add(@i,1)
+            else 
+            set @DateCreatednumber = concat(@DateCreatednumber,",",Add(@i,1))
+            endif
+        endif
+
+
+    NEXT @i
+  ENDIF 
+
+
   ]%%
- </div>        
+       
+       
+        </div>        
 <!--[if gte mso 9]>
 <xml>
 <o:OfficeDocumentSettings>
@@ -73,7 +116,7 @@ sup { font-size: 100% !important; }
 </style>
 <![endif]-->
 <!-- body, html, table, thead, tbody, tr, td, div, h1, h2, h3, h4, h5, p, a, span, em, i, strong { font-family: Arial, sans-serif !important; } -->
-<title>You got 10 extra entries 🥳 Use the code inside 👉</title>
+<title>You got 25 extra entries 🥳 Use the code inside 👉</title>
 <!--[if (gte mso 9)|(IE)]><!-->
     <style>
         @import url("https://fonts.googleapis.com/css?family=Montserrat:400,500,700%7COpen+Sans:400,700&display=swap");
@@ -263,6 +306,9 @@ supported-color-schemes: light dark;
 <!-- HEADER START -->
 
          <!-- LOGO START -->
+         %%[ 
+         set @points = Field(Row(@JSONrows, @PointsBalancenumber),1)
+         ]%%
 
          %%[ IF NOT EMPTY(@points) AND @points != 0 THEN 
          set @asterisk = "*Log in to your Account Dashboard to confirm the actual number of Entries you have to use to enter into a Sweepstakes. Recent activity may not be reflected in the Entries shown above and your actual Entries available may be different."
@@ -365,7 +411,7 @@ supported-color-schemes: light dark;
                                           padding: 20.3px 40px 25.3px 0;
                                           border-radius: 0 8px 8px 0;
                                         ">
-                      %%=v(@points)=%%</td></tr></table><!--[if (gte mso 9)|(IE)]->
+                      %%=v(Replace(FormatNumber(Field(Row(@JSONrows, @PointsBalancenumber),1), 'N0', 'en-us'), ',', ''))=%%</td></tr></table><!--[if (gte mso 9)|(IE)]->
                                   </td>
                                   </tr>
                                   </table>
@@ -540,7 +586,6 @@ supported-color-schemes: light dark;
                    
          <!-- HEADER END -->
   
-  
    <!--%%[IF @sub_loyalty != "PTR" THEN]%%-->
  
     
@@ -554,8 +599,6 @@ supported-color-schemes: light dark;
      
    
       <!--%%[ENDIF]%%-->
-  
-  
   
   
 <!-- Intro -->
@@ -573,7 +616,7 @@ supported-color-schemes: light dark;
 <tr>
 <td class="c-white l-white fz-18 lh-22 px-30 pb-34 mpx-15 mpb-20" style="font-family:'Akzidenz Grotesk', 'Montserrat', Arial, sans-serif; min-width:auto !important; text-align:center; color:#3d3c3c; font-size: 18px; line-height: 22px; padding-left: 30px; padding-right: 30px; padding-bottom: 34px;">
 <p class="c-white l-white fz-18 lh-22" style="font-family:'Akzidenz Grotesk', 'Montserrat', Arial, sans-serif; min-width:auto !important; text-align:center; color:#3d3c3c; font-size: 18px; line-height: 22px;">
-Enter the code <strong><span class="c-red" style="color:#de202c;">%%=v(@redeemCode)=%%</span></strong> on your dashboard so you can earn <span class="m-hide"><br /></span>your 25 entries!
+Enter the code <strong><span class="c-red" style="color:#de202c;">%%=v(@redeemCode)=%%</span></strong> on your dashboard so you can earn <span class="m-hide"><br /></span>your additional special 25 entries!
 </p>
 </td>
 </tr>
