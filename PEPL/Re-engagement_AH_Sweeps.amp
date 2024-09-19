@@ -2,17 +2,17 @@
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
 <head>
   <!--%%[
-    /*Abort email if subscriber has no incomplete activities */
-    SET @LoyaltyProgramMember = [LoyaltyProgramMember]
+    /*Abort email if subscriber has no incomplete activities  PTR - Re-engagement Journey - EN_PTR - Re-engagem_1sg8Y000000TNH8QAO_85R8Y000000GmjBUAS_I*/ 
+    SET @LoyaltyProgramMember = Lookup("ent.PTR - Re-engagement Journey - EN_PTR - Re-engagem_1sg8Y000000TNH8QAO_85R8Y000000GmjBUAS_I", "LoyaltyProgramMember", "EmailAddress", emailAddress)
   IF EMPTY (@LoyaltyProgramMember) THEN
-   RaiseError("LoyaltyProgramMember Json is empty", true)
+  RaiseError("LoyaltyProgramMember Json is empty", true)
   ENDIF
   ]%% -->
   <script runat="server" language="JavaScript">
-  
-  var jsonString = Platform.Recipient.GetAttributeValue('LoyaltyProgramMember');
-  var jsonData = Platform.Function.ParseJSON(jsonString);
-  if (payload !== null) {
+   // Retrieve the AMPscript attribute
+    var jsonString = Platform.Variable.GetValue("@LoyaltyProgramMember");
+    var jsonData = Platform.Function.ParseJSON(jsonString);
+  if (jsonData !== null) {
     var row = jsonData[0];
     var points = row.Points_Balance;
     // include here the Incomplete Activities pull when the data is ready
