@@ -1,10 +1,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
-    <script runat="server" language="JavaScript">
+<script runat="server" language="JavaScript">
   Platform.Load('Core','1');
   var emailAddress = Platform.Recipient.GetAttributeValue('emailAddress');
-  var payloadString = Platform.Function.Lookup('ent.PTR - Re-engagement Journey AH Bonus - EN_PTR - Re-engagem_1sg8Y000000TNHDQA4_85R8Y000000GmjGUAS_I','LoyaltyProgramMember','emailAddress',emailAddress);
-  Platform.Variable.SetValue("@jsonString", payloadString);
+  var payloadString = Platform.Recipient.GetAttributeValue('LoyaltyProgramMember');
   var payload = Platform.Function.ParseJSON(payloadString);
   if (payload !== null) {
     var row = payload[0];
@@ -16,6 +14,76 @@
     Platform.Variable.SetValue("@points", points);
   }
 </script>
+
+<!-- ACTIVITIES AMPSCRIPT 
+%%[
+  set @lineItemRowset = BuildRowsetFromJSON(@row,"$.Loyalty_Activities_Available.[*]",1)
+  set @rowCount = rowcount(@lineItemRowset)
+  set @activityIDs = ""
+  IF @rowCount > 0 THEN
+    for @i = 1 to @rowCount do
+      set @row = row(@lineItemRowset, @i)
+      set @test2 = field(@row, "Activity_Id")
+      set @test1 = CONCAT(@test2, ';')
+      set @activityIDs = CONCAT(@activityIDs, @test1)
+    next @i
+  ENDIF
+  set @activity1ID = Substring(@activityIDs, 1, Subtract(IndexOf(@activityIDs,';'), 1))
+  set @activity2ID = Substring(@activityIDs, Add(indexOf(@activityIDs, ';'), 1), 36)
+
+  /* ############################################ */
+  /* ################### Activity 1 */ ########## */
+  /* ############################################ */
+  set @image1URL = Lookup("ENT.PEPL_Activity_Lookup", "English_Image", "Campaign_Id", @activity1ID)
+  set @link1 ="https://www.tastyrewards.com/en-us/dashboard?__locale__=en"
+  set @title1 = Lookup("ENT.PEPL_Activity_Lookup", "English_Title", "Campaign_Id", @activity1ID)
+  set @copy1 = Lookup("ENT.PEPL_Activity_Lookup", "English_Description", "Campaign_Id", @activity1ID)
+
+  /* ############################################ */
+  /* ################### Activity 2 */ ########## */
+  /* ############################################ */
+  set @image2URL = Lookup("ENT.PEPL_Activity_Lookup", "English_Image", "Campaign_Id", @activity2ID)
+  set @link2 ="https://www.tastyrewards.com/en-us/dashboard?__locale__=en"
+  set @title2 = Lookup("ENT.PEPL_Activity_Lookup", "English_Title", "Campaign_Id", @activity2ID)
+  set @copy2 = Lookup("ENT.PEPL_Activity_Lookup", "English_Description", "Campaign_Id", @activity2ID)
+]%% -->
+
+<!-- FOOTER AMPSCRIPT
+%%[
+IF NOT EMPTY(@points) AND @points != 0
+  THEN set @asterisk = "*Log in to your Account Dashboard to confirm the actual number of Entries you have to use to enter into a Sweepstakes. Recent activity may not be reflected in the Entries shown above and your actual Entries available may be different."
+  set @disclaimer = "Unused Entries will expire after 12 months of no activity in your Account or 12 months following the date on which you completed an Activity, earned an Entry but did not use for a drawing (any unused Entries remaining in an Account after that time will be forfeited)."
+ENDIF
+]%% -->
+
+<!-- PERSONALIZATION AMPSCRIPT
+%%[
+  /* Basic Personalization */
+  set @firstName = iif(EMPTY(FirstName) OR FirstName == "FirstName", "Valued Member", trim(propercase(FirstName)))
+  set @ribbon = concat(@firstName, ", welcome to PepsiCo Tasty Rewards!")
+
+  /* ACTIVE LOYALTY
+  ===============================
+  ACTIVE LOYALTY - Used for Quaker (and future brands) dynamic header banner */
+  set @sub_loyalty = [Brand_Affinity]
+  set @brand_header_img = Lookup("PTR_Modular_Brands_Attributes", "Header Image URL", "Brand Short Name", @sub_loyalty)
+  set @brand_header_link = Lookup("PTR_Modular_Brands_Attributes", "Header Link", "Brand Short Name", @sub_loyalty)
+  set @brand_header_alt_text = Lookup("PTR_Modular_Brands_Attributes", "Header Alt Text", "Brand Short Name", @sub_loyalty)
+  set @cta_link = @brand_header_link
+]%% -->
+
+<!-- COUPON AMPSCRIPT
+%%[
+  set @DE = "ENT.Coupons_Data_EN"
+
+  /* Coupon 1 */
+  set @coupon1image = LookUp(@DE, "CouponURL", "CouponID", 1)
+  set @coupon1link = LookUp(@DE, "CouponLink", "CouponID", 1)
+
+  /* Coupon 2 */
+  set @coupon2image = LookUp(@DE, "CouponURL", "CouponID", 2)
+  set @coupon2link = LookUp(@DE, "CouponLink", "CouponID", 2)
+]%% -->
 <head>
     <div style="display: none">
         %%[
@@ -36,8 +104,9 @@
   set @brand_header_alt_text = Lookup("PTR_Modular_Brands_Attributes", "Header Alt Text", "Brand Short Name", @sub_loyalty)
   ENDIF
    if @PTR_Status == 'Subscriber' then
-    RaiseError("Ptr status is Subscriber", true)
+    set @points = ''
     ENDIF 
+    SET @jsonString = '[]' 
     if @PTR_Status == 'Account Holder' AND Empty (@jsonString) then
     RaiseError("LoyaltyProgramMember Json is empty", true)
     ENDIF
@@ -541,107 +610,330 @@ supported-color-schemes: light dark;
          <!-- HEADER END -->
   
   
-   <!--%%[IF @sub_loyalty != "PTR" THEN]%%-->
+   <!--%%[IF @sub_loyalty == "PTR" THEN]%%-->
  
     
           <table cellpadding='0' cellspacing='0' border='0' role='presentation' style="max-width: 640px; width: 100%;" width="640" valign="middle">
             <tr>
               <td valign="middle" style="font-size: 0; padding: 0">
-                <a href="%%=RedirectTo(@brand_header_link)=%%" target="_blank" alias="Brand_header_link"><img src="%%=RedirectTo(@brand_header_img)=%%" style="max-width: 640px; width: 100%;" width="640" alt="%%=v(@brand_header_alt_text)=%%"></a>
+                <a href="%%=RedirectTo(@brand_header_link)=%%" target="_blank" alias="Brand_header_link"><img src="https://image.em.pepsico.com/lib/fe4515707564067f771671/m/1/622b8748-b9eb-4fe6-892e-019cd4a871d3.png" style="max-width: 640px; width: 100%;" width="640" alt="%%=v(@brand_header_alt_text)=%%"></a>
               </td>
             </tr>
           </table>
      
    
       <!--%%[ENDIF]%%-->
+
   
   
-  
-  
-<!-- Intro -->
-<table width="100%" border="0" cellspacing="0" cellpadding="0">
-<tr>
-<td class="fz-40 lh-40 c-blue l-blue pt-60 px-20 pb-35 mpy-20" style="font-family:'GTWalsheim', 'Arimo', Arial, sans-serif; min-width:auto !important; font-size: 40px; line-height: 40px; text-align:center; color:#0e4caa; padding-top: 60px; padding-left: 20px; padding-right: 20px; padding-bottom: 35px;"><p class="fz-40 lh-40 c-blue l-blue" style="font-family:'GTWalsheim', 'Arimo', Arial, sans-serif; min-width:auto !important; font-size: 40px; line-height: 40px; text-align:center; color:#0e4caa;"><strong>Unlocked: Get <span class="c-red" style="color:#de202c;">25 Entries</span> <span class="m-hide"><br /></span>With Code Below</strong></p></td>
-</tr>
-</table>
+<!-- Hello Name table Intro -->
+
+  <table width="100%" cellpadding='0' cellspacing='0' cellpadding="0" border='0' role='presentation' style="background-color: #ffffff" class="body-dark">
+    <tr>
+      <td align="center">
+        <table cellpadding='0' cellspacing='0' border='0' role='presentation'>
+          <tr>
+            <td align="center"
+              style="color: #0E4CAA; font-family: 'GTWalsheim', 'Arimo', sans-serif, Heveltica, Arial; font-size: 40px; font-weight: 700; padding: 50px 100px 0px 100px; line-height: 42px;" class="headline-text">
+              Hello %%=v(@firstName)=%%,
+            </td>
+          </tr>
+          <tr>
+            <td align="center"
+              style="color: #0E4CAA; font-family: 'GTWalsheim', 'Arimo', sans-serif, Heveltica, Arial; font-size: 40px; font-weight: 700; padding: 0 100px; line-height: 42px;"
+              class="headline-text">
+              Welcome to
+            </td>
+          </tr>
+          <tr>
+            <td align="center"
+              style="color: #0E4CAA; font-family: 'GTWalsheim', 'Arimo', sans-serif, Helvetica, Arial; font-size: 40px; font-weight: 700; padding: 0 50px; line-height: 42px;"
+              class="headline-text">
+              PepsiCo Tasty Rewards
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+    <tr>
+      <td height="26"></td>
+    </tr>
+    <tr>
+      <td align="center"
+        style="color: #3D3C3C; font-family: 'Akzidenz Grotesk', 'Montserrat', sans-serif, Helvetica, Arial; font-size: 18px; mso-line-height-rule: exactly; line-height: 24px; padding: 0 60px;"
+        class="mb-hero-copy-resize white-text">
+        Now you can complete activities to earn entries towards sweepstakes and giveaways. As a thank you,
+        we&rsquo;ve added 5 entries to your account. Plus, you have access to exclusive coupons for your
+        favorite snacks and beverages!
+      </td>
+    </tr>
+    <tr>
+      <td height="36"></td>
+    </tr>
+    <tr>
+      <td align="center">
+        <table cellpadding='0' cellspacing='0' border='0' role='presentation'
+          style="background-color: #DB1D2C; border-radius: 100px;">
+          <tr>
+            <td align="center"
+              style="color: #ffffff; font-size: 18px; font-family: 'GTWalsheim', 'Arimo', sans-serif, Helvetica, Arial; padding: 21px 42px; font-weight: 700; line-height: 26px"
+              class="mb-cta-resize">
+              <a href="%%=RedirectTo(@brand_header_link)=%%"
+                target="_blank" style="text-decoration: none; color: #ffffff;" alias="hero_cta">GET STARTED</a>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+    <tr>
+      <td height="72.5"></td>
+    </tr>
+  </table>
+
 <!-- END Intro -->
-<!-- Your Sweepstakes -->
+<!-- Activities Section start -->
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
-<tr>
-<td class="pb-40 mpb-20" style="padding-bottom: 40px;">
+ <!-- Your Activities -->
+ <tr>
+  <td class="px-30 mpx-15 pt-10 pb-56 mpb-30" style="padding-left: 30px; padding-right: 30px; padding-top: 10px; padding-bottom: 56px;">
+    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td class="title a-center fz-40 lh-54 mfz-34 mlh-38 c-blue l-blue pb-32 mpb-24" style="font-family:'Arimo', Arial, sans-serif; min-width:auto !important; text-align:center; font-size: 40px; line-height: 54px; color:#0e4caa; padding-top: 62px; padding-bottom: 32px;">
+          <h1 class="title a-center fz-40 lh-54 mfz-34 mlh-38 c-blue l-blue no-p" style="font-family:'Arimo', Arial, sans-serif; min-width:auto !important; text-align:center; font-size: 40px; line-height: 54px; color:#0e4caa; padding:0 !important; margin:0 !important; mso-line-height-rule:exactly;"><strong>Your Activities</strong></h1>
+        </td>
+      </tr>
+      <tr>
+        <td class="pb-34 mpb-20" style="padding-bottom: 34px;">
+          <table width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+              <th class="column-top" width="280" style="border: 1px solid #e5e5e5; border-radius: 12px; font-size:0pt; line-height:0pt; padding:0; margin:0; font-weight:normal; vertical-align:top; background-color: #FFFFFF">
+                <table width="100%" border="0" cellspacing="0" cellpadding="0" class="body-dark">
+                  <tr>
+                    <td class="fluid-img img-center" style="font-size:0pt; line-height:0pt; text-align:center;"><a href="%%=v(@link1)=%%" target="_blank" alias="Sweeps1_Img"><img src="%%=v(@image1URL)=%%" class="br-12-12-0-0" width="279" height="157.03" border="0" alt="$10,000 Taste Of Gameday Sweepstakes" /></a></td>
+                  </tr>
+                  <tr>
+                    <td class="pt-18 pb-23 px-10 mpy-20 mpx-15" style="padding-top: 18px; padding-bottom: 23px; padding-left: 10px; padding-right: 10px;">
+                      <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                        <tr>
+                          <td class="title fz-20 lh-24 a-center c-blue l-blue pb-10" style="font-family:'Arimo', Arial, sans-serif; min-width:auto !important; font-size: 20px; line-height: 24px; color:#0e4caa; padding-bottom: 10px;">
+                            <p class="title fz-20 lh-24 a-center c-blue l-blue no-p" style="font-family:'Arimo', Arial, sans-serif; min-width:auto !important; font-size: 20px; line-height: 24px; color:#0e4caa; text-align: left !important; padding:0 !important; margin:0 !important; mso-line-height-rule:exactly;"><strong>%%=v(@title1)=%%</strong></p>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td class="text fz-12 lh-14 a-center c-dark l-dark ltspn-0.2 pb-14" style="font-family:'Montserrat', Arial, sans-serif; min-width:auto !important; font-size: 12px; line-height: 14px; color:#333333; letter-spacing: -0.2px; padding-bottom: 14px;">
+                            <p class="text white-text fz-12 lh-14 a-center c-dark l-dark ltspn-0.2 no-p" style="font-family: 'Akzidenz Grotesk', 'Montserrat', Arial, sans-serif; min-width:auto !important; font-size: 12px; line-height: 14px; color:#333333; letter-spacing: -0.2px; padding:0 !important; margin:0 !important; mso-line-height-rule:exactly; text-align: left !important">%%=v(@copy1)=%%</p>
+                          </td>
+                        </tr>
+                      </table>
+                    </td>
+                  </tr>
+                </table>
+              </th>
+              <th class="column mpb-20" width="16" style="font-size:0pt; line-height:0pt; padding:0; margin:0; font-weight:normal;">&nbsp;</th>
+              <th class="column-top body-dark" style="border: 1px solid #e5e5e5; border-radius: 12px; font-size:0pt; line-height:0pt; padding:0; margin:0; font-weight:normal; vertical-align:top; background-color: #FFFFFF">
+                <table width="100%" border="0" cellspacing="0" cellpadding="0" class="body-dark">
+                  <tr>
+                    <td class="fluid-img img-center" style="font-size:0pt; line-height:0pt; text-align:center;"><a href="%%=v(@link2)=%%" target="_blank" alias="Sweeps2_Img"><img src="%%=v(@image2URL)=%%" class="br-12-12-0-0" width="279" height="157.03" border="0" alt="Back To School Survival Bundle Giveaway" /></a></td>
+                  </tr>
+                  <tr>
+                    <td class="pt-18 pb-23 px-10 mpy-20 mpx-15" style="padding-top: 18px; padding-bottom: 23px; padding-left: 10px; padding-right: 10px;">
+                      <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                        <tr>
+                          <td class="title fz-20 lh-24 a-center c-blue l-blue pb-10" style="font-family:'Arimo', Arial, sans-serif; min-width:auto !important; font-size: 20px; line-height: 24px; color:#0e4caa; padding-bottom: 10px;">
+                            <p class="title fz-20 lh-24 a-center c-blue l-blue no-p" style="font-family:'Arimo', Arial, sans-serif; min-width:auto !important; font-size: 20px; line-height: 24px; color:#0e4caa; text-align: left !important; padding:0 !important; margin:0 !important; mso-line-height-rule:exactly;"><strong>%%=v(@title2)=%%</strong></p>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td class="text fz-12 lh-14 a-center c-dark l-dark ltspn-0.2 pb-14" style="font-family:'Montserrat', Arial, sans-serif; min-width:auto !important; font-size: 12px; line-height: 14px; color:#333333; letter-spacing: -0.2px; padding-bottom: 14px;">
+                            <p class="text white-text fz-12 lh-14 a-center c-dark l-dark ltspn-0.2 no-p" style="font-family: 'Akzidenz Grotesk', 'Montserrat', Arial, sans-serif; min-width:auto !important; font-size: 12px; line-height: 14px; color:#333333; letter-spacing: -0.2px; padding:0 !important; margin:0 !important; mso-line-height-rule:exactly; text-align: left !important">%%=v(@copy2)=%%</p> 
+                          </td>
+                        </tr>
+                      </table>
+                    </td>
+                  </tr>
+                </table>
+              </th>
+            </tr>
+          </table>
+        </td>
+      </tr>
+      <tr>
+        <td align="center">
+          <table cellpadding='0' cellspacing='0' border='0' role='presentation'
+            style="background-color: #DB1D2C; border-radius: 100px;">
+            <tr>
+              <td align="center"
+                style="color: #ffffff; font-size: 18px; font-family: 'GTWalsheim', 'Arimo', sans-serif, Helvetica, Arial; padding: 21px 42px; font-weight: 700; line-height: 26px"
+                class="mb-cta-resize">
+                <a href="%%=v(@brand_header_link)=%%" target="_blank"
+                  style="text-decoration: none; color: #ffffff;" alias="coupons_cta">EARN ENTRIES</a>
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<!-- END Your Activities -->
+</table>
+<!-- Activities Section start End-->
+ <!-- SNACKS.COM START -->
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
-<tr>
-<td class="c-white l-white fz-18 lh-22 px-30 pb-34 mpx-15 mpb-20" style="font-family:'Akzidenz Grotesk', 'Montserrat', Arial, sans-serif; min-width:auto !important; text-align:center; color:#3d3c3c; font-size: 18px; line-height: 22px; padding-left: 30px; padding-right: 30px; padding-bottom: 34px;">
-<p class="c-white l-white fz-18 lh-22" style="font-family:'Akzidenz Grotesk', 'Montserrat', Arial, sans-serif; min-width:auto !important; text-align:center; color:#3d3c3c; font-size: 18px; line-height: 22px;">
-Enter the code <strong><span class="c-red" style="color:#de202c;">%%=v(@redeemCode)=%%</span></strong> on your dashboard so you can earn <span class="m-hide"><br /></span>your 25 entries!
-</p>
-</td>
-</tr>
-<tr>
-<td class="pb-34 mpb-20" style="padding-bottom: 34px;">
+  <tr>
+    <td align="center" style="padding: 0px;">
+      <a alias="Snacks.com_Img" href="https://www.snacks.com/" target="_blank"><img alt="Snacks.com"
+          src="https://image.em.pepsico.com/lib/fe4515707564067f771671/m/1/65f3ec24-25cb-40c3-bd76-ad47daeb9e23.png"
+          style="border: 0; display: block; margin: 0; max-width: 640px; width: 100%;" width="640"> </a>
+    </td>
+  </tr>
+</table>
+
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
-<tr>
-<td background="https://image.em.pepsico.com/lib/fe4515707564067f771671/m/1/ac62c579-8f3b-4fb5-959f-b7ce0ff419ea.png" bgcolor="#fbdf45" width="640" height="229" valign="top" style="width: 100%">
-<!--[if gte mso 9]>
-<v:rect xmlns:v="urn:schemas-microsoft-com:vml" fill="true" stroke="false" style="width:640px;height:229;">
-<v:fill type="frame" src="https://image.em.pepsico.com/lib/fe4515707564067f771671/m/1/ac62c579-8f3b-4fb5-959f-b7ce0ff419ea.png" color="#fbdf45" />
-<v:textbox inset="0,0,0,0">
-<![endif]-->
-<div>
-<table width="100%" border="0" cellspacing="0" cellpadding="0">
-<tr>
-<td class="mw-15" width="30" style="font-size:0pt; line-height:0pt; text-align:left;">
-<table width="100%" border="0" cellspacing="0" cellpadding="0">
-<tr>
-<td  style="padding: 114px 0; font-size:0pt; line-height:0pt; text-align:left;">&nbsp;</td>
-</tr>
+  <tr>
+    <td>
+      <table cellpadding='0' cellspacing='0' border='0' role='presentation' style="background-color: #ffffff;"
+        class="body-dark">
+        <tr>
+          <td align="center">
+            <table cellpadding='0' cellspacing='0' border='0' role='presentation'>
+              <tr>
+                <td align="center"
+                  style="color: #0E4CAA; font-family: 'GTWalsheim', 'Arimo', sans-serif, Heveltica, Arial; font-size: 40px; font-weight: 700; padding: 50px 100px 0px 100px; line-height: 42px;"
+                  class="headline-text">
+                  Let's Start Snacking
+                </td>
+              </tr>
+
+            </table>
+          </td>
+        </tr>
+        <tr>
+          <td height="26"></td>
+        </tr>
+        <tr>
+          <td align="center"
+            style="color: #3D3C3C; font-family: 'Akzidenz Grotesk', 'Montserrat', sans-serif, Helvetica, Arial; font-size: 18px; mso-line-height-rule: exactly; line-height: 24px; padding: 0 60px;"
+            class="mb-hero-copy-resize white-text">
+            As a PepsiCo Tasty Rewards member, here’s what you unlock on Snacks.com:<br class="mb-hide"/> You’ll be the first to know
+            about limited-edition exclusives, hard-to-find flavors, tried-and-true classics, customizable variety
+            packs, and more.<br /><br />Now go get your snack on!
+          </td>
+        </tr>
+        <tr>
+          <td height="36"></td>
+        </tr>
+        <tr>
+          <td align="center">
+            <table cellpadding='0' cellspacing='0' border='0' role='presentation'
+              style="background-color: #DB1D2C; border-radius: 100px;">
+              <tr>
+                <td align="center"
+                  style="color: #ffffff; font-size: 18px; font-family: 'GTWalsheim', 'Arimo', sans-serif, Helvetica, Arial; padding: 21px 42px; font-weight: 700; line-height: 26px"
+                  class="mb-cta-resize">
+                  <a href="https://www.snacks.com/" target="_blank" style="text-decoration: none; color: #ffffff;"
+                    alias="Snacks.com_CTA">GET STARTED</a>
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+        <tr>
+          <td height="72.5"></td>
+        </tr>
+      </table>
+    </td>
+  </tr>
 </table>
-</td>
-<td  style="font-size:0pt; line-height:0pt; text-align:left;">
-<table width="100%" border="0" cellspacing="0" cellpadding="0">
-<tr>
-<td class="fz-53 lh-57 c-red" style="font-family:'GTWalsheim', 'Arimo', Arial, sans-serif; min-width:auto !important; font-size: 53px; line-height: 57px; color:#de202c; text-align:center;"><p class="fz-53 lh-57 c-red" style="font-family:'GTWalsheim', 'Arimo', Arial, sans-serif; min-width:auto !important; font-size: 53px; line-height: 57px; color:#de202c; text-align:center;"><strong>25 Entries</strong></p></td>
-</tr>
-<tr>
-<td class="fz-27 lh-31 c-blue" style="font-family:'GTWalsheim', 'Arimo', Arial, sans-serif; min-width:auto !important; font-size: 27px; line-height: 31px; color:#0e4caa; text-align:center;"><p class="fz-27 lh-31 c-blue" style="font-family:'GTWalsheim', 'Arimo', Arial, sans-serif; min-width:auto !important; font-size: 27px; line-height: 31px; color:#0e4caa; text-align:center;"><strong>With Code</strong></p></td>
-</tr>
-<tr>
-<td class="fz-53 lh-57 c-red" style="font-family:'GTWalsheim', 'Arimo', Arial, sans-serif; min-width:auto !important; font-size: 53px; line-height: 57px; color:#de202c; text-align:center;"><p class="fz-53 lh-57 c-red" style="font-family:'GTWalsheim', 'Arimo', Arial, sans-serif; min-width:auto !important; font-size: 53px; line-height: 57px; color:#de202c; text-align:center;"><strong>%%=v(@redeemCode)=%%</strong></p></td>
-</tr>
-</table>
-</td>
-<td class="mw-15" width="30" style="font-size:0pt; line-height:0pt; text-align:left;"></td>
-</tr>
-</table>
-</div>
-<!--[if gte mso 9]>
-</v:textbox>
-</v:rect>
-<![endif]-->
-</td>
-</tr>
-</table>
-</td>
-</tr>
-<tr>
-<td class="px-30 mpx-15" align="center" style="padding-left: 30px; padding-right: 30px;">
-<!-- Button -->
-<table width="256" border="0" cellspacing="0" cellpadding="0">
-<tr>
-<td class="fz-20 lh-24 l-white btnp-18-25 bg-red" style="border-radius: 50px; font-family:'GTWalsheim', 'Arimo', Arial, sans-serif; text-align:center; min-width:auto !important; font-size: 20px; line-height: 24px; color:#fffffe; mso-padding-alt:18px 25px;" bgcolor="#db1d2c"> <!--%%[IF @sub_loyalty == "PTR" THEN]%%--><a href="https://www.tastyrewards.com/en-us/" target="_blank" style="display: block; padding: 18px 25px; text-decoration:none; color:#fffffe;" alias="hero_cta"><strong>REDEEM NOW</strong></a>
-                <!--%%[ENDIF]%%-->
-                <!--%%[IF @sub_loyalty != "PTR" THEN]%%--><a href="%%=RedirectTo(@brand_header_link)=%%" target="_blank"style="display: block; padding: 18px 25px; text-decoration:none; color:#fffffe;" alias="hero_cta"><strong>REDEEM NOW</strong></a>
-                <!--%%[ENDIF]%%--></td>
-</tr>
-</table>
-<!-- END Button -->
-</td>
-</tr>
-</table>
-</td>
-</tr>
-</table>
-<!-- END Your Sweepstakes -->
+ <!-- SNACKS.COM End -->
+ <table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td align="center" style="font-size: 0; text-align: center; padding: 0">
+      <table cellpadding='0' cellspacing='0' border='0' role='presentation' style="max-width: 640px; width: 100%; background-color: #F8F8F8; text-align: center; padding: 0" class="body-grey">
+        <tr>
+          <td height="62"></td>
+        </tr>
+        <tr>
+          <td align="center" style="color: #0E4CAA; font-family: 'GTWalsheim', 'Arimo', sans-serif, Helvetica, Arial; font-size: 40px; font-weight: 700; padding: 0 50px; line-height: 42px;" class="headline-text">
+            Your Coupons
+        </td>
+        </tr>
+        <tr>
+          <td height="40"></td>
+        </tr>
+        
+        <tr>
+          <td align="center">
+            <!--[if (gte mso 9)|(IE)]>
+              <table cellpadding='0' cellspacing='0' border='0' role='presentation'>
+              <tr>
+              <td valign="top" width="310">                  
+            <![endif]-->
+            <table cellpadding='0' cellspacing='0' border='0' role='presentation' style="max-width: 310px; display: inline-block; text-align: center;" class="mb-column">
+              <tr>
+                <td align="center" width="310">
+                  <a href="%%=RedirectTo(@coupon1link)=%%" target="_blank" alias="Coupon_1"><img src="%%=RedirectTo(@coupon1image)=%%" width="271" height="305" alt="Your Coupons"></a>
+                </td>
+              </tr>
+            </table>
+            <!--[if (gte mso 9)|(IE)]>
+            </td><td valign="top" width="20">
+            <![endif]-->
+            <table cellpadding='0' cellspacing='0' border='0' role='presentation' style="max-width: 20px; width: 100%; display: inline-block;" class="mb-coupon-column-padding">
+              <tr>
+                <td>                      
+                </td>
+              </tr>
+            </table>
+            <!--[if (gte mso 9)|(IE)]>
+            </td><td valign="top" width="310">  
+            <![endif]-->
+            <table cellpadding='0' cellspacing='0' border='0' role='presentation' style="max-width: 310px; display: inline-block;" class="mb-column">
+              <tr>
+                <td align="center" width="310">
+                  <a href="%%=RedirectTo(@coupon2link)=%%" target="_blank" alias="Coupon_1"><img src="%%=RedirectTo(@coupon2image)=%%" width="271" height="305" alt="Your Coupons"></a>
+                </td>
+              </tr>
+            </table>
+            <!--[if (gte mso 9)|(IE)]>
+            </td>
+            </tr>
+            </table>
+            <![endif]-->
+            
+          </td>
+        </tr>
+
+        <tr>
+          <td height="61"></td>
+        </tr>
+
+        <tr>
+          <td align="center">
+            <table cellpadding='0' cellspacing='0' border='0' role='presentation' style="background-color: #DB1D2C; border-radius: 100px;">
+              <tr>
+                <td align="center" style="color: #ffffff; font-size: 18px; font-family: 'GTWalsheim', 'Arimo', sans-serif, Helvetica, Arial; padding: 21px 42px; font-weight: 700; line-height: 26px" class="mb-cta-resize">
+                  <a href="https://www.tastyrewards.com/en-us/coupons" target="_blank" style="text-decoration: none; color: #ffffff;" alias="coupons_cta">CLAIM NOW*</a>
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+        <tr>
+          <td height="15"></td>
+        </tr>
+        <tr>
+          <td align="center" style="color: #3D3C3C; font-family: 'Akzidenz Grotesk', 'Montserrat', sans-serif, Helvetica, Arial; font-size: 14px; mso-line-height-rule: exactly; line-height: 24px; padding: 0 60px;" class="mb-hero-copy-resize white-text">
+            *Coupons available while quantities last
+          </td>
+        </tr>
+        <tr>
+          <td height="50"></td>
+        </tr>          
+      </table>
+    </td>
+  </tr>
+ </table>
 <!-- Footer -->
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr>
